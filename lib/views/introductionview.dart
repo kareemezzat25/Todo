@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:todo_app/models/theme.dart';
+import 'package:todo_app/views/onBoardingview.dart';
+import 'package:toggle_switch/toggle_switch.dart';
 
 class IntroductionView extends StatelessWidget {
   static const String routeName = "Introduction";
@@ -31,7 +36,10 @@ class IntroductionView extends StatelessWidget {
             ),
             Text(
                 "Choose your preferred theme and language to get started with a comfortable, tailored experience that suits your style.",
-                style: Theme.of(context).textTheme.titleMedium),
+                style: Theme.of(context)
+                    .textTheme
+                    .titleMedium!
+                    .copyWith(color: Colors.black)),
             SizedBox(
               height: 28,
             ),
@@ -39,7 +47,26 @@ class IntroductionView extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text("Language", style: Theme.of(context).textTheme.titleLarge),
-                Text("a-E")
+                ToggleSwitch(
+                  minWidth: 70.0,
+                  initialLabelIndex: 1,
+                  cornerRadius: 20.0,
+                  activeFgColor: Colors.white,
+                  inactiveBgColor: Colors.grey,
+                  inactiveFgColor: Colors.white,
+                  totalSwitches: 2,
+                  icons: [
+                    FontAwesomeIcons.flagUsa,
+                    MdiIcons.abjadArabic,
+                  ],
+                  activeBgColors: [
+                    [MyThemeData.secondaryColorLightdark],
+                    [MyThemeData.primaryColordark]
+                  ],
+                  onToggle: (index) {
+                    print('switched to: $index');
+                  },
+                ),
               ],
             ),
             SizedBox(
@@ -49,14 +76,35 @@ class IntroductionView extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text("Theme", style: Theme.of(context).textTheme.titleLarge),
-                Text("Black-light")
+                ToggleSwitch(
+                  minWidth: 70.0,
+                  initialLabelIndex: 1,
+                  cornerRadius: 20.0,
+                  activeFgColor: Colors.white,
+                  inactiveBgColor: Colors.grey,
+                  inactiveFgColor: Colors.white,
+                  totalSwitches: 2,
+                  icons: [
+                    FontAwesomeIcons.moon,
+                    FontAwesomeIcons.lightbulb,
+                  ],
+                  activeBgColors: [
+                    [MyThemeData.secondaryColorLightdark],
+                    [Colors.black]
+                  ],
+                  onToggle: (index) {
+                    print('switched to: $index');
+                  },
+                ),
               ],
             ),
             SizedBox(
               height: 28,
             ),
             ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.pushNamed(context, OnBoardingView.routeName);
+                },
                 child: Text("Let's Start",
                     style: Theme.of(context)
                         .textTheme
