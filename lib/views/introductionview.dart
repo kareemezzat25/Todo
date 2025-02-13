@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -29,13 +30,12 @@ class IntroductionView extends StatelessWidget {
             SizedBox(
               height: 28,
             ),
-            Text("Personalize Your Experience",
+            Text("introduction_title".tr(),
                 style: Theme.of(context).textTheme.titleLarge),
             SizedBox(
               height: 16,
             ),
-            Text(
-                "Choose your preferred theme and language to get started with a comfortable, tailored experience that suits your style.",
+            Text("introduction_body".tr(),
                 style: Theme.of(context)
                     .textTheme
                     .titleMedium!
@@ -46,25 +46,32 @@ class IntroductionView extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text("Language", style: Theme.of(context).textTheme.titleLarge),
+                Text("language".tr(),
+                    style: Theme.of(context).textTheme.titleLarge),
                 ToggleSwitch(
                   minWidth: 70.0,
-                  initialLabelIndex: 1,
+                  initialLabelIndex: context.locale.toString() == "en" ? 0 : 1,
                   cornerRadius: 20.0,
                   activeFgColor: Colors.white,
                   inactiveBgColor: Colors.grey,
                   inactiveFgColor: Colors.white,
                   totalSwitches: 2,
+                  animate: true,
+                  curve: Curves.bounceInOut,
                   icons: [
                     FontAwesomeIcons.flagUsa,
                     MdiIcons.abjadArabic,
                   ],
                   activeBgColors: [
-                    [MyThemeData.secondaryColorLightdark],
-                    [MyThemeData.primaryColordark]
+                    [MyThemeData.primarycolorlight],
+                    [Colors.orange]
                   ],
                   onToggle: (index) {
-                    print('switched to: $index');
+                    if (index == 1) {
+                      context.setLocale(Locale('ar'));
+                    } else {
+                      context.setLocale(Locale('en'));
+                    }
                   },
                 ),
               ],
@@ -75,7 +82,8 @@ class IntroductionView extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text("Theme", style: Theme.of(context).textTheme.titleLarge),
+                Text("theme".tr(),
+                    style: Theme.of(context).textTheme.titleLarge),
                 ToggleSwitch(
                   minWidth: 70.0,
                   initialLabelIndex: 1,
@@ -89,7 +97,7 @@ class IntroductionView extends StatelessWidget {
                     FontAwesomeIcons.lightbulb,
                   ],
                   activeBgColors: [
-                    [MyThemeData.secondaryColorLightdark],
+                    [MyThemeData.primarycolorlight],
                     [Colors.black]
                   ],
                   onToggle: (index) {
@@ -105,7 +113,7 @@ class IntroductionView extends StatelessWidget {
                 onPressed: () {
                   Navigator.pushNamed(context, OnBoardingView.routeName);
                 },
-                child: Text("Let's Start",
+                child: Text("let's_start".tr(),
                     style: Theme.of(context)
                         .textTheme
                         .titleLarge!

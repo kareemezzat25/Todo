@@ -2,31 +2,32 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class MyThemeData {
-  static const primarycolorlight = Color(0xFFF2FEFF);
-  static const secondaryColorLightdark = Color(0xFF5669FF);
+  static const primarycolorlight = Color(0xFF5669FF);
+  static const secondaryColorLightdark = Color(0xFFF2FEFF);
   static const primaryColordark = Color(0xFF101127);
   static ThemeData lightTheme = ThemeData(
       primaryColor: primarycolorlight,
-      scaffoldBackgroundColor: primarycolorlight,
+      focusColor: Colors.grey,
+      scaffoldBackgroundColor: secondaryColorLightdark,
       appBarTheme: const AppBarTheme(
           elevation: 0, backgroundColor: Colors.transparent, centerTitle: true),
       bottomNavigationBarTheme: const BottomNavigationBarThemeData(
         showSelectedLabels: true,
         showUnselectedLabels: true,
-        selectedItemColor: primarycolorlight,
-        unselectedItemColor: secondaryColorLightdark,
+        selectedItemColor: secondaryColorLightdark,
+        unselectedItemColor: primarycolorlight,
         type: BottomNavigationBarType.fixed,
       ),
       textTheme: TextTheme(
           titleLarge: GoogleFonts.inter(
-            color: secondaryColorLightdark,
+            color: primarycolorlight,
             fontSize: 20,
             fontWeight: FontWeight.w700,
           ),
           titleMedium: GoogleFonts.inter(
             fontSize: 16,
             fontWeight: FontWeight.w500,
-            color: secondaryColorLightdark,
+            color: primarycolorlight,
           ),
           titleSmall: GoogleFonts.inter(
             fontSize: 12,
@@ -34,6 +35,7 @@ class MyThemeData {
           )));
 
   static ThemeData darkTheme = ThemeData(
+      focusColor: primarycolorlight,
       scaffoldBackgroundColor: primaryColordark,
       primaryColor: primaryColordark,
       appBarTheme: const AppBarTheme(
@@ -49,13 +51,13 @@ class MyThemeData {
           titleLarge: GoogleFonts.inter(
               fontSize: 20,
               fontWeight: FontWeight.w700,
-              color: secondaryColorLightdark),
+              color: primarycolorlight),
           titleMedium: GoogleFonts.inter(
               fontSize: 16,
               fontWeight: FontWeight.w500,
-              color: secondaryColorLightdark),
+              color: primarycolorlight),
           titleSmall: GoogleFonts.inter(
               fontSize: 12,
               fontWeight: FontWeight.w700,
-              color: secondaryColorLightdark)));
+              color: primarycolorlight)));
 }
