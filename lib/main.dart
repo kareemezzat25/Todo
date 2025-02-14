@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:todo_app/models/cache.dart';
 import 'package:todo_app/models/theme.dart';
 import 'package:todo_app/views/forgetPassword.dart';
 import 'package:todo_app/views/introductionview.dart';
@@ -9,6 +10,7 @@ import 'package:todo_app/views/signup.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Cache.init();
   await EasyLocalization.ensureInitialized();
   runApp(EasyLocalization(
     supportedLocales: [Locale('en'), Locale('ar')],
@@ -30,7 +32,9 @@ class TodoApp extends StatelessWidget {
       theme: MyThemeData.lightTheme,
       darkTheme: MyThemeData.darkTheme,
       themeMode: ThemeMode.light,
-      initialRoute: IntroductionView.routeName,
+      initialRoute: Cache.getEligibilty() == true
+          ? LoginView.routeName
+          : IntroductionView.routeName,
       routes: {
         IntroductionView.routeName: (context) => const IntroductionView(),
         OnBoardingView.routeName: (context) => const OnBoardingView(),

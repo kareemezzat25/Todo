@@ -1,6 +1,7 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:introduction_screen/introduction_screen.dart';
+import 'package:todo_app/models/cache.dart';
 import 'package:todo_app/models/theme.dart';
 import 'package:todo_app/views/loginview.dart';
 
@@ -70,7 +71,7 @@ class OnBoardingView extends StatelessWidget {
                 color: Color(0xFF5669FF),
                 size: 38,
               )
-            : Icon(
+            : const Icon(
                 Icons.arrow_circle_right_outlined,
                 color: Color(0xFF5669FF),
                 size: 38,
@@ -81,12 +82,13 @@ class OnBoardingView extends StatelessWidget {
                 color: Color(0xFF5669FF),
                 size: 38,
               )
-            : Icon(
+            : const Icon(
                 Icons.arrow_circle_left_outlined,
                 color: Color(0xFF5669FF),
                 size: 38,
               ),
         onDone: () {
+          Cache.saveEligibilty();
           Navigator.pushNamed(context, LoginView.routeName);
         },
         done: context.locale.toString() == "en"
@@ -95,7 +97,7 @@ class OnBoardingView extends StatelessWidget {
                 color: Color(0xFF5669FF),
                 size: 38,
               )
-            : Icon(
+            : const Icon(
                 Icons.arrow_circle_left_outlined,
                 color: Color(0xFF5669FF),
                 size: 38,

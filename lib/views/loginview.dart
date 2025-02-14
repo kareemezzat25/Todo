@@ -27,14 +27,14 @@ class LoginView extends StatelessWidget {
                   "assets/images/Logo.png",
                   height: 182,
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 24,
                 ),
                 TextField(
                   controller: emailController,
                   decoration: InputDecoration(
                       labelText: "Email",
-                      prefixIcon: Icon(
+                      prefixIcon: const Icon(
                         Icons.email,
                       ),
                       labelStyle: Theme.of(context)
@@ -54,7 +54,7 @@ class LoginView extends StatelessWidget {
                           borderSide: BorderSide(
                               width: 1, color: Theme.of(context).focusColor))),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 16,
                 ),
                 TextField(
@@ -65,10 +65,10 @@ class LoginView extends StatelessWidget {
                           .textTheme
                           .titleMedium!
                           .copyWith(color: Theme.of(context).focusColor),
-                      prefixIcon: Icon(
+                      prefixIcon: const Icon(
                         Icons.lock,
                       ),
-                      suffix: Icon(Icons.visibility_off),
+                      suffix: const Icon(Icons.visibility_off),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(16),
                         borderSide: BorderSide(
@@ -83,7 +83,7 @@ class LoginView extends StatelessWidget {
                           borderSide:
                               BorderSide(color: Theme.of(context).focusColor))),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 16,
                 ),
                 GestureDetector(
@@ -98,7 +98,7 @@ class LoginView extends StatelessWidget {
                         decorationColor: Theme.of(context).primaryColor),
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 24,
                 ),
                 ElevatedButton(
@@ -111,11 +111,11 @@ class LoginView extends StatelessWidget {
                           .copyWith(color: Colors.white),
                     ),
                     style: ElevatedButton.styleFrom(
-                        padding: EdgeInsets.symmetric(vertical: 16),
+                        padding: const EdgeInsets.symmetric(vertical: 16),
                         backgroundColor: MyThemeData.primarycolorlight,
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(16)))),
-                SizedBox(
+                const SizedBox(
                   height: 24,
                 ),
                 GestureDetector(
@@ -145,7 +145,7 @@ class LoginView extends StatelessWidget {
                                         Theme.of(context).primaryColor))
                       ])),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 24,
                 ),
                 Row(
@@ -172,15 +172,15 @@ class LoginView extends StatelessWidget {
                     )
                   ],
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 24,
                 ),
                 Container(
-                  padding: EdgeInsets.symmetric(vertical: 8),
+                  padding: const EdgeInsets.symmetric(vertical: 8),
                   decoration: BoxDecoration(
-                      border: Border.all(color: Color(0xFF5669FF)),
+                      border: Border.all(color: const Color(0xFF5669FF)),
                       borderRadius: BorderRadius.circular(16),
-                      color: Color(0xFFF2FEFF)),
+                      color: const Color(0xFFF2FEFF)),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -199,6 +199,9 @@ class LoginView extends StatelessWidget {
                       )
                     ],
                   ),
+                ),
+                const SizedBox(
+                  height: 16,
                 )
               ],
             ),
