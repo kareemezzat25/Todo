@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:todo_app/models/theme.dart';
+import 'package:todo_app/views/forgetPassword.dart';
+import 'package:todo_app/views/signup.dart';
 
 class LoginView extends StatelessWidget {
   static const String routeName = "Login";
@@ -11,6 +13,9 @@ class LoginView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        automaticallyImplyLeading: false,
+      ),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16.0),
@@ -81,12 +86,17 @@ class LoginView extends StatelessWidget {
                 SizedBox(
                   height: 16,
                 ),
-                Text(
-                  "Forget Password?",
-                  textAlign: TextAlign.right,
-                  style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                      decoration: TextDecoration.underline,
-                      decorationColor: Theme.of(context).primaryColor),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.pushNamed(context, ForgetPasswordView.routeName);
+                  },
+                  child: Text(
+                    "Forget Password?",
+                    textAlign: TextAlign.right,
+                    style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                        decoration: TextDecoration.underline,
+                        decorationColor: Theme.of(context).primaryColor),
+                  ),
                 ),
                 SizedBox(
                   height: 24,
@@ -108,26 +118,33 @@ class LoginView extends StatelessWidget {
                 SizedBox(
                   height: 24,
                 ),
-                Text.rich(
-                    textAlign: TextAlign.center,
-                    TextSpan(children: [
-                      TextSpan(
-                          text: "Don’t Have Account ?",
-                          style:
-                              Theme.of(context).textTheme.titleMedium!.copyWith(
-                                  // change in dark mode
-                                  color: Colors.black)),
-                      TextSpan(
-                          text: "Create Account",
-                          style: Theme.of(context)
-                              .textTheme
-                              .titleMedium!
-                              .copyWith(
-                                  fontSize: 18,
-                                  decoration: TextDecoration.underline,
-                                  decorationColor:
-                                      Theme.of(context).primaryColor))
-                    ])),
+                GestureDetector(
+                  onTap: () {
+                    Navigator.pushNamed(context, SignUpView.routeName);
+                  },
+                  child: Text.rich(
+                      textAlign: TextAlign.center,
+                      TextSpan(children: [
+                        TextSpan(
+                            text: "Don’t Have Account ?",
+                            style: Theme.of(context)
+                                .textTheme
+                                .titleMedium!
+                                .copyWith(
+                                    // change in dark mode
+                                    color: Colors.black)),
+                        TextSpan(
+                            text: "Create Account",
+                            style: Theme.of(context)
+                                .textTheme
+                                .titleMedium!
+                                .copyWith(
+                                    fontSize: 18,
+                                    decoration: TextDecoration.underline,
+                                    decorationColor:
+                                        Theme.of(context).primaryColor))
+                      ])),
+                ),
                 SizedBox(
                   height: 24,
                 ),
@@ -163,7 +180,7 @@ class LoginView extends StatelessWidget {
                   decoration: BoxDecoration(
                       border: Border.all(color: Color(0xFF5669FF)),
                       borderRadius: BorderRadius.circular(16),
-                      color: Colors.white),
+                      color: Color(0xFFF2FEFF)),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [

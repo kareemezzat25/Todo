@@ -87,7 +87,7 @@ class OnBoardingView extends StatelessWidget {
                 size: 38,
               ),
         onDone: () {
-          Navigator.pushReplacementNamed(context, LoginView.routeName);
+          Navigator.pushNamed(context, LoginView.routeName);
         },
         done: context.locale.toString() == "en"
             ? const Icon(

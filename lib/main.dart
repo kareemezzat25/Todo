@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:todo_app/models/theme.dart';
+import 'package:todo_app/views/forgetPassword.dart';
 import 'package:todo_app/views/introductionview.dart';
 import 'package:todo_app/views/loginview.dart';
 import 'package:todo_app/views/onBoardingview.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:todo_app/views/signup.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -32,7 +34,9 @@ class TodoApp extends StatelessWidget {
       routes: {
         IntroductionView.routeName: (context) => const IntroductionView(),
         OnBoardingView.routeName: (context) => const OnBoardingView(),
-        LoginView.routeName: (context) => LoginView()
+        LoginView.routeName: (context) => LoginView(),
+        SignUpView.routeName: (context) => SignUpView(),
+        ForgetPasswordView.routeName: (context) => ForgetPasswordView()
       },
       debugShowCheckedModeBanner: false,
     );
