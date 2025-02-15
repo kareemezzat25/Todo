@@ -1,8 +1,12 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'dart:ui' as ui; // Import dart:ui explicitly
+
 import 'package:google_fonts/google_fonts.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:todo_app/main.dart';
 import 'package:todo_app/models/theme.dart';
 import 'package:todo_app/views/onBoardingview.dart';
 import 'package:toggle_switch/toggle_switch.dart';
@@ -15,7 +19,11 @@ class IntroductionView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Image.asset("assets/images/logoAppBar.png"),
+        title: Image.asset(
+          "assets/images/logoAppBar.png",
+          width: 159.w,
+          height: 50.h,
+        ),
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16.0),
@@ -25,15 +33,16 @@ class IntroductionView extends StatelessWidget {
             Image.asset(
               "assets/images/introduction.png",
               fit: BoxFit.fill,
-              width: double.infinity,
+              width: 321.w,
+              height: 342.h,
             ),
             SizedBox(
-              height: 28,
+              height: 28.h,
             ),
             Text("introduction_title".tr(),
                 style: Theme.of(context).textTheme.titleLarge),
             SizedBox(
-              height: 16,
+              height: 16.h,
             ),
             Text("introduction_body".tr(),
                 style: Theme.of(context)
@@ -41,43 +50,47 @@ class IntroductionView extends StatelessWidget {
                     .titleMedium!
                     .copyWith(color: Colors.black)),
             SizedBox(
-              height: 28,
+              height: 28.h,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text("language".tr(),
                     style: Theme.of(context).textTheme.titleLarge),
-                ToggleSwitch(
-                  minWidth: 70.0,
-                  initialLabelIndex: context.locale.toString() == "en" ? 0 : 1,
-                  cornerRadius: 20.0,
-                  activeFgColor: Colors.white,
-                  inactiveBgColor: Colors.grey,
-                  inactiveFgColor: Colors.white,
-                  totalSwitches: 2,
-                  animate: true,
-                  curve: Curves.bounceInOut,
-                  icons: [
-                    FontAwesomeIcons.flagUsa,
-                    MdiIcons.abjadArabic,
-                  ],
-                  activeBgColors: [
-                    [MyThemeData.primarycolorlight],
-                    [Colors.orange]
-                  ],
-                  onToggle: (index) {
-                    if (index == 1) {
-                      context.setLocale(Locale('ar'));
-                    } else {
-                      context.setLocale(Locale('en'));
-                    }
-                  },
+                Directionality(
+                  textDirection: ui.TextDirection.ltr,
+                  child: ToggleSwitch(
+                    minWidth: 70.0,
+                    initialLabelIndex:
+                        context.locale.toString() == "en" ? 0 : 1,
+                    cornerRadius: 20.0,
+                    activeFgColor: Colors.white,
+                    inactiveBgColor: Colors.grey,
+                    inactiveFgColor: Colors.white,
+                    totalSwitches: 2,
+                    animate: true,
+                    curve: Curves.bounceInOut,
+                    icons: [
+                      FontAwesomeIcons.flagUsa,
+                      MdiIcons.abjadArabic,
+                    ],
+                    activeBgColors: [
+                      [MyThemeData.primarycolorlight],
+                      [Colors.orange]
+                    ],
+                    onToggle: (index) {
+                      if (index == 1) {
+                        context.setLocale(const Locale('ar'));
+                      } else {
+                        context.setLocale(const Locale('en'));
+                      }
+                    },
+                  ),
                 ),
               ],
             ),
             SizedBox(
-              height: 16,
+              height: 16.h,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -107,24 +120,24 @@ class IntroductionView extends StatelessWidget {
               ],
             ),
             SizedBox(
-              height: 28,
+              height: 28.h,
             ),
             ElevatedButton(
                 onPressed: () {
                   Navigator.pushNamed(context, OnBoardingView.routeName);
                 },
+                style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color(0xFF5669FF),
+                    minimumSize: Size(360.w, 55.h),
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(16.r))),
                 child: Text("let's_start".tr(),
                     style: Theme.of(context)
                         .textTheme
                         .titleLarge!
-                        .copyWith(color: Colors.white)),
-                style: ElevatedButton.styleFrom(
-                    backgroundColor: Color(0xFF5669FF),
-                    minimumSize: Size(360, 55),
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(16)))),
+                        .copyWith(color: Colors.white))),
             SizedBox(
-              height: 8,
+              height: 8.h,
             )
           ]),
         ),

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:todo_app/main.dart';
 
 class MyThemeData {
   static const primarycolorlight = Color(0xFF5669FF);
@@ -21,16 +23,16 @@ class MyThemeData {
       textTheme: TextTheme(
           titleLarge: GoogleFonts.inter(
             color: primarycolorlight,
-            fontSize: 20,
+            fontSize: 20.sp,
             fontWeight: FontWeight.w700,
           ),
           titleMedium: GoogleFonts.inter(
-            fontSize: 16,
+            fontSize: 16.sp,
             fontWeight: FontWeight.w500,
             color: primarycolorlight,
           ),
           titleSmall: GoogleFonts.inter(
-            fontSize: 12,
+            fontSize: 12.sp,
             fontWeight: FontWeight.w700,
           )));
 
@@ -49,15 +51,15 @@ class MyThemeData {
           type: BottomNavigationBarType.fixed),
       textTheme: TextTheme(
           titleLarge: GoogleFonts.inter(
-              fontSize: 20,
+              fontSize: 20.sp,
               fontWeight: FontWeight.w700,
               color: primarycolorlight),
           titleMedium: GoogleFonts.inter(
-              fontSize: 16,
+              fontSize: 16.sp,
               fontWeight: FontWeight.w500,
               color: primarycolorlight),
           titleSmall: GoogleFonts.inter(
-              fontSize: 12,
+              fontSize: 12.sp,
               fontWeight: FontWeight.w700,
               color: primarycolorlight)));
 }

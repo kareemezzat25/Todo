@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:todo_app/models/cache.dart';
 import 'package:todo_app/models/theme.dart';
 import 'package:todo_app/views/forgetPassword.dart';
+import 'package:todo_app/views/homeview.dart';
 import 'package:todo_app/views/introductionview.dart';
 import 'package:todo_app/views/loginview.dart';
 import 'package:todo_app/views/onBoardingview.dart';
@@ -25,24 +27,32 @@ class TodoApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      localizationsDelegates: context.localizationDelegates,
-      supportedLocales: context.supportedLocales,
-      locale: context.locale,
-      theme: MyThemeData.lightTheme,
-      darkTheme: MyThemeData.darkTheme,
-      themeMode: ThemeMode.light,
-      initialRoute: Cache.getEligibilty() == true
-          ? LoginView.routeName
-          : IntroductionView.routeName,
-      routes: {
-        IntroductionView.routeName: (context) => const IntroductionView(),
-        OnBoardingView.routeName: (context) => const OnBoardingView(),
-        LoginView.routeName: (context) => LoginView(),
-        SignUpView.routeName: (context) => SignUpView(),
-        ForgetPasswordView.routeName: (context) => ForgetPasswordView()
+    return ScreenUtilInit(
+      designSize: Size(393, 841), // Set your base design size (e.g., iPhone X)
+      minTextAdapt: true,
+      splitScreenMode: true,
+      builder: (context, child) {
+        return MaterialApp(
+          localizationsDelegates: context.localizationDelegates,
+          supportedLocales: context.supportedLocales,
+          locale: context.locale,
+          theme: MyThemeData.lightTheme,
+          darkTheme: MyThemeData.darkTheme,
+          themeMode: ThemeMode.light,
+          initialRoute: Cache.getEligibilty() == true
+              ? LoginView.routeName
+              : IntroductionView.routeName,
+          routes: {
+            IntroductionView.routeName: (context) => const IntroductionView(),
+            OnBoardingView.routeName: (context) => const OnBoardingView(),
+            LoginView.routeName: (context) => LoginView(),
+            SignUpView.routeName: (context) => SignUpView(),
+            HomeView.routeName: (context) => HomeView(),
+            ForgetPasswordView.routeName: (context) => ForgetPasswordView()
+          },
+          debugShowCheckedModeBanner: false,
+        );
       },
-      debugShowCheckedModeBanner: false,
     );
   }
 }

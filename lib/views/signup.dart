@@ -1,6 +1,12 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'dart:ui' as ui; // Import dart:ui explicitly
 import 'package:todo_app/models/theme.dart';
 import 'package:todo_app/views/loginview.dart';
+import 'package:toggle_switch/toggle_switch.dart';
 
 class SignUpView extends StatelessWidget {
   static const String routeName = "SignUP";
@@ -16,7 +22,7 @@ class SignUpView extends StatelessWidget {
         appBar: AppBar(
             iconTheme: const IconThemeData(color: Colors.black),
             title: Text(
-              "Register",
+              "register".tr(),
               style: Theme.of(context)
                   .textTheme
                   .titleLarge!
@@ -29,15 +35,15 @@ class SignUpView extends StatelessWidget {
               children: [
                 Image.asset(
                   "assets/images/Logo.png",
-                  height: 182,
+                  height: 182.h,
                 ),
-                const SizedBox(
-                  height: 24,
+                SizedBox(
+                  height: 24.h,
                 ),
                 TextField(
                   controller: nameController,
                   decoration: InputDecoration(
-                      labelText: "name",
+                      labelText: "name".tr(),
                       labelStyle: Theme.of(context)
                           .textTheme
                           .titleMedium!
@@ -47,26 +53,26 @@ class SignUpView extends StatelessWidget {
                         color: Theme.of(context).focusColor,
                       ),
                       border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(16),
+                        borderRadius: BorderRadius.circular(16.r),
                         borderSide:
                             BorderSide(color: Theme.of(context).focusColor),
                       ),
                       enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(16),
+                          borderRadius: BorderRadius.circular(16.r),
                           borderSide:
                               BorderSide(color: Theme.of(context).focusColor)),
                       focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(16),
+                          borderRadius: BorderRadius.circular(16.r),
                           borderSide:
                               BorderSide(color: Theme.of(context).focusColor))),
                 ),
-                const SizedBox(
-                  height: 16,
+                SizedBox(
+                  height: 16.h,
                 ),
                 TextField(
                   controller: emailController,
                   decoration: InputDecoration(
-                      labelText: "Email",
+                      labelText: "email".tr(),
                       labelStyle:
                           Theme.of(context).textTheme.titleMedium!.copyWith(
                                 color: Theme.of(context).focusColor,
@@ -74,25 +80,25 @@ class SignUpView extends StatelessWidget {
                       prefixIcon: Icon(Icons.email,
                           color: Theme.of(context).focusColor),
                       border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(16),
+                          borderRadius: BorderRadius.circular(16.r),
                           borderSide:
                               BorderSide(color: Theme.of(context).focusColor)),
                       enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(16),
+                          borderRadius: BorderRadius.circular(16.r),
                           borderSide:
                               BorderSide(color: Theme.of(context).focusColor)),
                       focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(16),
+                          borderRadius: BorderRadius.circular(16.r),
                           borderSide:
                               BorderSide(color: Theme.of(context).focusColor))),
                 ),
-                const SizedBox(
-                  height: 16,
+                SizedBox(
+                  height: 16.h,
                 ),
                 TextField(
                   controller: passwordController,
                   decoration: InputDecoration(
-                      labelText: "Password",
+                      labelText: "password".tr(),
                       labelStyle: Theme.of(context)
                           .textTheme
                           .titleMedium!
@@ -102,15 +108,15 @@ class SignUpView extends StatelessWidget {
                         color: Theme.of(context).focusColor,
                       ),
                       border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(16),
+                          borderRadius: BorderRadius.circular(16.r),
                           borderSide:
                               BorderSide(color: Theme.of(context).focusColor)),
                       enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(16),
+                          borderRadius: BorderRadius.circular(16.r),
                           borderSide:
                               BorderSide(color: Theme.of(context).focusColor)),
                       focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(16),
+                          borderRadius: BorderRadius.circular(16.r),
                           borderSide:
                               BorderSide(color: Theme.of(context).focusColor))),
                 ),
@@ -120,7 +126,7 @@ class SignUpView extends StatelessWidget {
                 TextField(
                   controller: rePasswordController,
                   decoration: InputDecoration(
-                      labelText: "Re Password",
+                      labelText: "re_password".tr(),
                       labelStyle: Theme.of(context)
                           .textTheme
                           .titleMedium!
@@ -130,36 +136,36 @@ class SignUpView extends StatelessWidget {
                         color: Theme.of(context).focusColor,
                       ),
                       border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(16),
+                          borderRadius: BorderRadius.circular(16.r),
                           borderSide:
                               BorderSide(color: Theme.of(context).focusColor)),
                       enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(16),
+                          borderRadius: BorderRadius.circular(16.r),
                           borderSide:
                               BorderSide(color: Theme.of(context).focusColor)),
                       focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(16),
+                          borderRadius: BorderRadius.circular(16.r),
                           borderSide:
                               BorderSide(color: Theme.of(context).focusColor))),
                 ),
-                const SizedBox(
-                  height: 16,
+                SizedBox(
+                  height: 16.h,
                 ),
                 ElevatedButton(
                     onPressed: () {},
                     child: Text(
-                      "Create Account",
+                      "create_account".tr(),
                       style: Theme.of(context).textTheme.titleLarge!.copyWith(
                           color: Colors.white, fontWeight: FontWeight.w500),
                     ),
                     style: ElevatedButton.styleFrom(
-                        minimumSize: const Size(360, 56),
+                        minimumSize: Size(360.w, 56.h),
                         padding: const EdgeInsets.symmetric(vertical: 16),
                         backgroundColor: MyThemeData.primarycolorlight,
                         shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(16)))),
-                const SizedBox(
-                  height: 16,
+                            borderRadius: BorderRadius.circular(16.r)))),
+                SizedBox(
+                  height: 16.h,
                 ),
                 GestureDetector(
                   onTap: () {
@@ -169,13 +175,13 @@ class SignUpView extends StatelessWidget {
                       textAlign: TextAlign.center,
                       TextSpan(children: [
                         TextSpan(
-                            text: "Already Have Account ?",
+                            text: "already_have_account".tr(),
                             style: Theme.of(context)
                                 .textTheme
                                 .titleMedium!
                                 .copyWith(color: Colors.black)),
                         TextSpan(
-                            text: "Login",
+                            text: "login".tr(),
                             style: Theme.of(context)
                                 .textTheme
                                 .titleMedium!
@@ -186,8 +192,33 @@ class SignUpView extends StatelessWidget {
                                         MyThemeData.primarycolorlight))
                       ])),
                 ),
-                const SizedBox(
-                  height: 16,
+                SizedBox(
+                  height: 16.h,
+                ),
+                Directionality(
+                  textDirection: ui.TextDirection.ltr,
+                  child: ToggleSwitch(
+                    minWidth: 70.0.w,
+                    initialLabelIndex:
+                        context.locale.toString() == "en" ? 0 : 1,
+                    cornerRadius: 20.0,
+                    activeFgColor: Colors.white,
+                    inactiveBgColor: Colors.grey,
+                    inactiveFgColor: Colors.white,
+                    totalSwitches: 2,
+                    icons: [FontAwesomeIcons.flagUsa, MdiIcons.abjadArabic],
+                    activeBgColors: [
+                      [MyThemeData.primarycolorlight],
+                      [Colors.orange]
+                    ],
+                    onToggle: (index) {
+                      if (index == 1) {
+                        context.setLocale(Locale("ar"));
+                      } else {
+                        context.setLocale(Locale("en"));
+                      }
+                    },
+                  ),
                 ),
               ],
             ),

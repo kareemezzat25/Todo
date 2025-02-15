@@ -1,7 +1,14 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'dart:ui' as ui; // Import dart:ui explicitly
 import 'package:todo_app/models/theme.dart';
 import 'package:todo_app/views/forgetPassword.dart';
+import 'package:todo_app/views/homeview.dart';
 import 'package:todo_app/views/signup.dart';
+import 'package:toggle_switch/toggle_switch.dart';
 
 class LoginView extends StatelessWidget {
   static const String routeName = "Login";
@@ -25,15 +32,15 @@ class LoginView extends StatelessWidget {
               children: [
                 Image.asset(
                   "assets/images/Logo.png",
-                  height: 182,
+                  height: 182.h,
                 ),
-                const SizedBox(
-                  height: 24,
+                SizedBox(
+                  height: 24.h,
                 ),
                 TextField(
                   controller: emailController,
                   decoration: InputDecoration(
-                      labelText: "Email",
+                      labelText: "email".tr(),
                       prefixIcon: const Icon(
                         Icons.email,
                       ),
@@ -42,25 +49,25 @@ class LoginView extends StatelessWidget {
                           .titleMedium!
                           .copyWith(color: Theme.of(context).focusColor),
                       border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(16),
+                          borderRadius: BorderRadius.circular(16.r),
                           borderSide: BorderSide(
                               width: 2, color: Theme.of(context).focusColor)),
                       enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(16),
+                          borderRadius: BorderRadius.circular(16.r),
                           borderSide: BorderSide(
                               width: 1, color: Theme.of(context).focusColor)),
                       focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(16),
+                          borderRadius: BorderRadius.circular(16.r),
                           borderSide: BorderSide(
                               width: 1, color: Theme.of(context).focusColor))),
                 ),
-                const SizedBox(
-                  height: 16,
+                SizedBox(
+                  height: 16.h,
                 ),
                 TextField(
                   controller: passwordController,
                   decoration: InputDecoration(
-                      labelText: "Password",
+                      labelText: "password".tr(),
                       labelStyle: Theme.of(context)
                           .textTheme
                           .titleMedium!
@@ -70,51 +77,54 @@ class LoginView extends StatelessWidget {
                       ),
                       suffix: const Icon(Icons.visibility_off),
                       border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(16),
+                        borderRadius: BorderRadius.circular(16.r),
                         borderSide: BorderSide(
-                            width: 1, color: Theme.of(context).focusColor),
+                            width: 2, color: Theme.of(context).focusColor),
                       ),
                       enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(16),
+                          borderRadius: BorderRadius.circular(16.r),
                           borderSide:
                               BorderSide(color: Theme.of(context).focusColor)),
                       focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(16),
+                          borderRadius: BorderRadius.circular(16.r),
                           borderSide:
                               BorderSide(color: Theme.of(context).focusColor))),
                 ),
-                const SizedBox(
-                  height: 16,
+                SizedBox(
+                  height: 16.h,
                 ),
                 GestureDetector(
                   onTap: () {
                     Navigator.pushNamed(context, ForgetPasswordView.routeName);
                   },
                   child: Text(
-                    "Forget Password?",
+                    "forget_password".tr(),
                     textAlign: TextAlign.right,
                     style: Theme.of(context).textTheme.titleMedium!.copyWith(
                         decoration: TextDecoration.underline,
                         decorationColor: Theme.of(context).primaryColor),
                   ),
                 ),
-                const SizedBox(
-                  height: 24,
+                SizedBox(
+                  height: 24.h,
                 ),
                 ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.pushNamed(context, HomeView.routeName);
+                    },
+                    style: ElevatedButton.styleFrom(
+                        minimumSize: Size(361.w, 56.h),
+                        padding: const EdgeInsets.symmetric(vertical: 16),
+                        backgroundColor: MyThemeData.primarycolorlight,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(16.r))),
                     child: Text(
-                      "Login",
+                      "login".tr(),
                       style: Theme.of(context)
                           .textTheme
                           .titleLarge!
                           .copyWith(color: Colors.white),
-                    ),
-                    style: ElevatedButton.styleFrom(
-                        padding: const EdgeInsets.symmetric(vertical: 16),
-                        backgroundColor: MyThemeData.primarycolorlight,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(16)))),
+                    )),
                 const SizedBox(
                   height: 24,
                 ),
@@ -126,7 +136,7 @@ class LoginView extends StatelessWidget {
                       textAlign: TextAlign.center,
                       TextSpan(children: [
                         TextSpan(
-                            text: "Don’t Have Account ?",
+                            text: "don't_have_account".tr(),
                             style: Theme.of(context)
                                 .textTheme
                                 .titleMedium!
@@ -134,7 +144,7 @@ class LoginView extends StatelessWidget {
                                     // change in dark mode
                                     color: Colors.black)),
                         TextSpan(
-                            text: "Create Account",
+                            text: "create_account".tr(),
                             style: Theme.of(context)
                                 .textTheme
                                 .titleMedium!
@@ -145,8 +155,8 @@ class LoginView extends StatelessWidget {
                                         Theme.of(context).primaryColor))
                       ])),
                 ),
-                const SizedBox(
-                  height: 24,
+                SizedBox(
+                  height: 24.h,
                 ),
                 Row(
                   children: [
@@ -159,7 +169,7 @@ class LoginView extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      "Or",
+                      "or".tr(),
                       style: Theme.of(context).textTheme.titleMedium,
                     ),
                     Expanded(
@@ -172,14 +182,16 @@ class LoginView extends StatelessWidget {
                     )
                   ],
                 ),
-                const SizedBox(
-                  height: 24,
+                SizedBox(
+                  height: 24.h,
                 ),
                 Container(
+                  width: 361.w,
+                  height: 58.h,
                   padding: const EdgeInsets.symmetric(vertical: 8),
                   decoration: BoxDecoration(
                       border: Border.all(color: const Color(0xFF5669FF)),
-                      borderRadius: BorderRadius.circular(16),
+                      borderRadius: BorderRadius.circular(16.r),
                       color: const Color(0xFFF2FEFF)),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -191,7 +203,7 @@ class LoginView extends StatelessWidget {
                         fit: BoxFit.contain,
                       ),
                       Text(
-                        "Login With Google",
+                        "login_with_google".tr(),
                         style: Theme.of(context)
                             .textTheme
                             .titleLarge!
@@ -200,8 +212,39 @@ class LoginView extends StatelessWidget {
                     ],
                   ),
                 ),
-                const SizedBox(
-                  height: 16,
+                SizedBox(
+                  height: 16.h,
+                ),
+                Center(
+                  child: Directionality(
+                    textDirection: ui.TextDirection
+                        .ltr, // Force LTR to keep layout consistent
+                    child: ToggleSwitch(
+                      minWidth: 70.0.w,
+                      initialLabelIndex:
+                          context.locale.toString() == "en" ? 0 : 1,
+                      cornerRadius: 20.0,
+                      activeFgColor: Colors.white,
+                      inactiveBgColor: Colors.grey,
+                      inactiveFgColor: Colors.white,
+                      totalSwitches: 2,
+                      icons: [FontAwesomeIcons.flagUsa, MdiIcons.abjadArabic],
+                      activeBgColors: const [
+                        [MyThemeData.primarycolorlight],
+                        [Colors.orange]
+                      ],
+                      onToggle: (index) {
+                        if (index == 1) {
+                          context.setLocale(const Locale("ar"));
+                        } else {
+                          context.setLocale(const Locale("en"));
+                        }
+                      },
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: 12.h,
                 )
               ],
             ),

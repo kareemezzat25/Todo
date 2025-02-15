@@ -1,5 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:introduction_screen/introduction_screen.dart';
 import 'package:todo_app/models/cache.dart';
 import 'package:todo_app/models/theme.dart';
@@ -31,15 +32,15 @@ class OnBoardingView extends StatelessWidget {
           child: SafeArea(
             child: Padding(
               padding: const EdgeInsets.only(top: 16),
-              child: _buildImage('assets/images/logoAppBar.png', 120),
+              child: _buildImage('assets/images/logoAppBar.png', 120.w),
             ),
           ),
         ),
         dotsDecorator: DotsDecorator(
-            activeSize: const Size(20, 8),
+            activeSize: Size(20.w, 8.h),
             activeColor: Theme.of(context).primaryColor,
             activeShape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(36),
+              borderRadius: BorderRadius.circular(36.r),
             ),
             color: Colors.black),
         pages: [
