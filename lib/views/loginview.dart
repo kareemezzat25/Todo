@@ -125,8 +125,8 @@ class LoginView extends StatelessWidget {
                           .titleLarge!
                           .copyWith(color: Colors.white),
                     )),
-                const SizedBox(
-                  height: 24,
+                SizedBox(
+                  height: 24.h,
                 ),
                 GestureDetector(
                   onTap: () {
@@ -149,7 +149,7 @@ class LoginView extends StatelessWidget {
                                 .textTheme
                                 .titleMedium!
                                 .copyWith(
-                                    fontSize: 18,
+                                    fontSize: 18.sp,
                                     decoration: TextDecoration.underline,
                                     decorationColor:
                                         Theme.of(context).primaryColor))

@@ -3,10 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'dart:ui' as ui; // Import dart:ui explicitly
-
-import 'package:google_fonts/google_fonts.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
-import 'package:todo_app/main.dart';
 import 'package:todo_app/models/theme.dart';
 import 'package:todo_app/views/onBoardingview.dart';
 import 'package:toggle_switch/toggle_switch.dart';
@@ -74,7 +71,7 @@ class IntroductionView extends StatelessWidget {
                       FontAwesomeIcons.flagUsa,
                       MdiIcons.abjadArabic,
                     ],
-                    activeBgColors: [
+                    activeBgColors: const [
                       [MyThemeData.primarycolorlight],
                       [Colors.orange]
                     ],
@@ -105,11 +102,11 @@ class IntroductionView extends StatelessWidget {
                   inactiveBgColor: Colors.grey,
                   inactiveFgColor: Colors.white,
                   totalSwitches: 2,
-                  icons: [
+                  icons: const [
                     FontAwesomeIcons.moon,
                     FontAwesomeIcons.lightbulb,
                   ],
-                  activeBgColors: [
+                  activeBgColors: const [
                     [MyThemeData.primarycolorlight],
                     [Colors.black]
                   ],

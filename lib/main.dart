@@ -28,7 +28,8 @@ class TodoApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
-      designSize: Size(393, 841), // Set your base design size (e.g., iPhone X)
+      designSize:
+          const Size(393, 841), // Set your base design size (e.g., iPhone X)
       minTextAdapt: true,
       splitScreenMode: true,
       builder: (context, child) {

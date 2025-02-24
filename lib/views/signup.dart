@@ -120,8 +120,8 @@ class SignUpView extends StatelessWidget {
                           borderSide:
                               BorderSide(color: Theme.of(context).focusColor))),
                 ),
-                const SizedBox(
-                  height: 16,
+                SizedBox(
+                  height: 16.h,
                 ),
                 TextField(
                   controller: rePasswordController,
@@ -186,7 +186,7 @@ class SignUpView extends StatelessWidget {
                                 .textTheme
                                 .titleMedium!
                                 .copyWith(
-                                    fontSize: 18,
+                                    fontSize: 18.sp,
                                     decoration: TextDecoration.underline,
                                     decorationColor:
                                         MyThemeData.primarycolorlight))
@@ -207,8 +207,8 @@ class SignUpView extends StatelessWidget {
                     inactiveFgColor: Colors.white,
                     totalSwitches: 2,
                     icons: [FontAwesomeIcons.flagUsa, MdiIcons.abjadArabic],
-                    activeBgColors: [
-                      [MyThemeData.primarycolorlight],
+                    activeBgColors: const [
+                      const [MyThemeData.primarycolorlight],
                       [Colors.orange]
                     ],
                     onToggle: (index) {

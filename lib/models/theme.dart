@@ -1,23 +1,34 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:todo_app/main.dart';
 
 class MyThemeData {
   static const primarycolorlight = Color(0xFF5669FF);
   static const secondaryColorLightdark = Color(0xFFF2FEFF);
   static const primaryColordark = Color(0xFF101127);
+  static const secondaryColorDark = Color(0xFFF4EBDC);
   static ThemeData lightTheme = ThemeData(
       primaryColor: primarycolorlight,
       focusColor: Colors.grey,
       scaffoldBackgroundColor: secondaryColorLightdark,
+      floatingActionButtonTheme: FloatingActionButtonThemeData(
+          backgroundColor: primarycolorlight,
+          shape: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(34.r),
+              borderSide: const BorderSide(color: Colors.white, width: 4))),
       appBarTheme: const AppBarTheme(
           elevation: 0, backgroundColor: Colors.transparent, centerTitle: true),
-      bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+      bottomNavigationBarTheme: BottomNavigationBarThemeData(
+        selectedLabelStyle: GoogleFonts.inter(
+            fontSize: 12.sp, fontWeight: FontWeight.w700, color: Colors.white),
+        unselectedLabelStyle: GoogleFonts.inter(
+            fontSize: 12.sp, fontWeight: FontWeight.w700, color: Colors.white),
+        backgroundColor: primarycolorlight,
         showSelectedLabels: true,
         showUnselectedLabels: true,
+        unselectedItemColor: Colors.white,
         selectedItemColor: secondaryColorLightdark,
-        unselectedItemColor: primarycolorlight,
+        selectedIconTheme: const IconThemeData(color: Colors.white),
         type: BottomNavigationBarType.fixed,
       ),
       textTheme: TextTheme(
@@ -34,20 +45,42 @@ class MyThemeData {
           titleSmall: GoogleFonts.inter(
             fontSize: 12.sp,
             fontWeight: FontWeight.w700,
-          )));
+          ),
+          bodyLarge: GoogleFonts.inter(
+              fontSize: 24.sp,
+              fontWeight: FontWeight.w700,
+              color: Colors.white),
+          bodySmall: GoogleFonts.inter(
+              fontSize: 14.sp,
+              fontWeight: FontWeight.w400,
+              color: Colors.white)));
 
   static ThemeData darkTheme = ThemeData(
       focusColor: primarycolorlight,
-      scaffoldBackgroundColor: primaryColordark,
       primaryColor: primaryColordark,
+      scaffoldBackgroundColor: primaryColordark,
+      floatingActionButtonTheme: FloatingActionButtonThemeData(
+          backgroundColor: primaryColordark,
+          shape: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(34.r),
+              borderSide: BorderSide(color: secondaryColorDark, width: 4))),
       appBarTheme: const AppBarTheme(
           centerTitle: true, elevation: 0, backgroundColor: Colors.transparent),
-      bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+      bottomNavigationBarTheme: BottomNavigationBarThemeData(
           backgroundColor: primaryColordark,
           showSelectedLabels: true,
           showUnselectedLabels: true,
-          selectedItemColor: Color(0xFFF4EBDC),
-          unselectedItemColor: primaryColordark,
+          selectedIconTheme: const IconThemeData(color: secondaryColorDark),
+          selectedLabelStyle: GoogleFonts.inter(
+              fontSize: 12,
+              fontWeight: FontWeight.w700,
+              color: secondaryColorDark),
+          unselectedLabelStyle: GoogleFonts.inter(
+              fontSize: 12,
+              fontWeight: FontWeight.w700,
+              color: secondaryColorDark),
+          selectedItemColor: secondaryColorDark,
+          unselectedItemColor: secondaryColorDark,
           type: BottomNavigationBarType.fixed),
       textTheme: TextTheme(
           titleLarge: GoogleFonts.inter(

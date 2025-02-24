@@ -56,13 +56,6 @@ class ForgetPasswordView extends StatelessWidget {
               ),
               ElevatedButton(
                 onPressed: () {},
-                child: Text(
-                  "reset_password".tr(),
-                  style: Theme.of(context)
-                      .textTheme
-                      .titleLarge!
-                      .copyWith(color: Colors.white),
-                ),
                 style: ElevatedButton.styleFrom(
                     minimumSize: Size(362.w, 56.h),
                     backgroundColor: MyThemeData.primarycolorlight,
@@ -70,6 +63,13 @@ class ForgetPasswordView extends StatelessWidget {
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(16.r),
                     )),
+                child: Text(
+                  "reset_password".tr(),
+                  style: Theme.of(context)
+                      .textTheme
+                      .titleLarge!
+                      .copyWith(color: Colors.white),
+                ),
               )
             ],
           ),
