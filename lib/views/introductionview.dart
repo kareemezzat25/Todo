@@ -4,7 +4,11 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'dart:ui' as ui; // Import dart:ui explicitly
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:provider/provider.dart';
+import 'package:todo_app/models/cache.dart';
 import 'package:todo_app/models/theme.dart';
+import 'package:todo_app/providers/theme_provider.dart';
+import 'package:todo_app/views/loginview.dart';
 import 'package:todo_app/views/onBoardingview.dart';
 import 'package:toggle_switch/toggle_switch.dart';
 
@@ -14,6 +18,7 @@ class IntroductionView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var provider = Provider.of<ThemeProvider>(context);
     return Scaffold(
       appBar: AppBar(
         title: Image.asset(
@@ -42,10 +47,10 @@ class IntroductionView extends StatelessWidget {
               height: 16.h,
             ),
             Text("introduction_body".tr(),
-                style: Theme.of(context)
-                    .textTheme
-                    .titleMedium!
-                    .copyWith(color: Colors.black)),
+                style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                    color: provider.themeMode == ThemeMode.dark
+                        ? MyThemeData.secondaryColorDark
+                        : Colors.black)),
             SizedBox(
               height: 28.h,
             ),
@@ -96,21 +101,23 @@ class IntroductionView extends StatelessWidget {
                     style: Theme.of(context).textTheme.titleLarge),
                 ToggleSwitch(
                   minWidth: 70.0,
-                  initialLabelIndex: 1,
+                  initialLabelIndex:
+                      provider.themeMode == ThemeMode.light ? 0 : 1,
                   cornerRadius: 20.0,
                   activeFgColor: Colors.white,
                   inactiveBgColor: Colors.grey,
                   inactiveFgColor: Colors.white,
                   totalSwitches: 2,
                   icons: const [
-                    FontAwesomeIcons.moon,
                     FontAwesomeIcons.lightbulb,
+                    FontAwesomeIcons.moon,
                   ],
                   activeBgColors: const [
                     [MyThemeData.primarycolorlight],
-                    [Colors.black]
+                    [Colors.orange]
                   ],
                   onToggle: (index) {
+                    provider.changeTheme();
                     print('switched to: $index');
                   },
                 ),
@@ -121,7 +128,9 @@ class IntroductionView extends StatelessWidget {
             ),
             ElevatedButton(
                 onPressed: () {
-                  Navigator.pushNamed(context, OnBoardingView.routeName);
+                  Cache.getEligibilty() == true
+                      ? Navigator.pushNamed(context, LoginView.routeName)
+                      : Navigator.pushNamed(context, OnBoardingView.routeName);
                 },
                 style: ElevatedButton.styleFrom(
                     backgroundColor: const Color(0xFF5669FF),

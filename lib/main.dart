@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
 import 'package:todo_app/models/cache.dart';
 import 'package:todo_app/models/theme.dart';
+import 'package:todo_app/providers/theme_provider.dart';
 import 'package:todo_app/views/forgetPassword.dart';
 import 'package:todo_app/views/homeview.dart';
 import 'package:todo_app/views/introductionview.dart';
@@ -14,11 +16,14 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Cache.init();
   await EasyLocalization.ensureInitialized();
-  runApp(EasyLocalization(
-    supportedLocales: [Locale('en'), Locale('ar')],
-    path: "assets/translations",
-    fallbackLocale: Locale('en'),
-    child: const TodoApp(),
+  runApp(ChangeNotifierProvider(
+    create: (context) => ThemeProvider(),
+    child: EasyLocalization(
+      supportedLocales: [Locale('en'), Locale('ar')],
+      path: "assets/translations",
+      fallbackLocale: Locale('en'),
+      child: const TodoApp(),
+    ),
   ));
 }
 
@@ -27,6 +32,7 @@ class TodoApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var provider = Provider.of<ThemeProvider>(context);
     return ScreenUtilInit(
       designSize:
           const Size(393, 841), // Set your base design size (e.g., iPhone X)
@@ -39,10 +45,8 @@ class TodoApp extends StatelessWidget {
           locale: context.locale,
           theme: MyThemeData.lightTheme,
           darkTheme: MyThemeData.darkTheme,
-          themeMode: ThemeMode.light,
-          initialRoute: Cache.getEligibilty() == true
-              ? LoginView.routeName
-              : IntroductionView.routeName,
+          themeMode: provider.themeMode,
+          initialRoute: IntroductionView.routeName,
           routes: {
             IntroductionView.routeName: (context) => const IntroductionView(),
             OnBoardingView.routeName: (context) => const OnBoardingView(),
