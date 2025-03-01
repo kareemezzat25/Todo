@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:provider/provider.dart';
 import 'dart:ui' as ui; // Import dart:ui explicitly
 import 'package:todo_app/models/theme.dart';
+import 'package:todo_app/providers/theme_provider.dart';
 import 'package:todo_app/views/forgetPassword.dart';
 import 'package:todo_app/views/homeview.dart';
 import 'package:todo_app/views/signup.dart';
@@ -19,6 +21,7 @@ class LoginView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var provider = Provider.of<ThemeProvider>(context);
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -41,13 +44,19 @@ class LoginView extends StatelessWidget {
                   controller: emailController,
                   decoration: InputDecoration(
                       labelText: "email".tr(),
-                      prefixIcon: const Icon(
+                      prefixIcon: Icon(
                         Icons.email,
+                        color: provider.themeMode == ThemeMode.dark
+                            ? MyThemeData.secondaryColorDark
+                            : Theme.of(context).focusColor,
                       ),
                       labelStyle: Theme.of(context)
                           .textTheme
                           .titleMedium!
-                          .copyWith(color: Theme.of(context).focusColor),
+                          .copyWith(
+                              color: provider.themeMode == ThemeMode.dark
+                                  ? MyThemeData.secondaryColorDark
+                                  : Theme.of(context).focusColor),
                       border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(16.r),
                           borderSide: BorderSide(
@@ -71,11 +80,22 @@ class LoginView extends StatelessWidget {
                       labelStyle: Theme.of(context)
                           .textTheme
                           .titleMedium!
-                          .copyWith(color: Theme.of(context).focusColor),
-                      prefixIcon: const Icon(
+                          .copyWith(
+                              color: provider.themeMode == ThemeMode.dark
+                                  ? MyThemeData.secondaryColorDark
+                                  : Theme.of(context).focusColor),
+                      prefixIcon: Icon(
                         Icons.lock,
+                        color: provider.themeMode == ThemeMode.dark
+                            ? MyThemeData.secondaryColorDark
+                            : Theme.of(context).focusColor,
                       ),
-                      suffix: const Icon(Icons.visibility_off),
+                      suffix: Icon(
+                        Icons.visibility_off,
+                        color: provider.themeMode == ThemeMode.dark
+                            ? MyThemeData.secondaryColorDark
+                            : Theme.of(context).focusColor,
+                      ),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(16.r),
                         borderSide: BorderSide(
@@ -141,8 +161,11 @@ class LoginView extends StatelessWidget {
                                 .textTheme
                                 .titleMedium!
                                 .copyWith(
-                                    // change in dark mode
-                                    color: Colors.black)),
+                                  // change in dark mode
+                                  color: provider.themeMode == ThemeMode.dark
+                                      ? MyThemeData.secondaryColorDark
+                                      : MyThemeData.primaryColordark,
+                                )),
                         TextSpan(
                             text: "create_account".tr(),
                             style: Theme.of(context)
@@ -152,7 +175,7 @@ class LoginView extends StatelessWidget {
                                     fontSize: 18.sp,
                                     decoration: TextDecoration.underline,
                                     decorationColor:
-                                        Theme.of(context).primaryColor))
+                                        MyThemeData.primarycolorlight))
                       ])),
                 ),
                 SizedBox(
@@ -160,10 +183,10 @@ class LoginView extends StatelessWidget {
                 ),
                 Row(
                   children: [
-                    Expanded(
+                    const Expanded(
                       child: Divider(
                         thickness: 1,
-                        color: Theme.of(context).primaryColor,
+                        color: MyThemeData.primarycolorlight,
                         indent: 26,
                         endIndent: 16,
                       ),
@@ -172,10 +195,10 @@ class LoginView extends StatelessWidget {
                       "or".tr(),
                       style: Theme.of(context).textTheme.titleMedium,
                     ),
-                    Expanded(
+                    const Expanded(
                       child: Divider(
                         thickness: 1,
-                        color: Theme.of(context).primaryColor,
+                        color: MyThemeData.primarycolorlight,
                         indent: 16,
                         endIndent: 26,
                       ),
@@ -192,7 +215,9 @@ class LoginView extends StatelessWidget {
                   decoration: BoxDecoration(
                       border: Border.all(color: const Color(0xFF5669FF)),
                       borderRadius: BorderRadius.circular(16.r),
-                      color: const Color(0xFFF2FEFF)),
+                      color: provider.themeMode == ThemeMode.dark
+                          ? Colors.transparent
+                          : Color(0xFFF2FEFF)),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [

@@ -17,7 +17,10 @@ class MyThemeData {
               borderRadius: BorderRadius.circular(34.r),
               borderSide: const BorderSide(color: Colors.white, width: 4))),
       appBarTheme: const AppBarTheme(
-          elevation: 0, backgroundColor: Colors.transparent, centerTitle: true),
+          iconTheme: IconThemeData(color: primaryColordark),
+          elevation: 0,
+          backgroundColor: Colors.transparent,
+          centerTitle: true),
       bottomNavigationBarTheme: BottomNavigationBarThemeData(
         selectedLabelStyle: GoogleFonts.inter(
             fontSize: 12.sp, fontWeight: FontWeight.w700, color: Colors.white),
@@ -63,9 +66,17 @@ class MyThemeData {
           backgroundColor: primaryColordark,
           shape: OutlineInputBorder(
               borderRadius: BorderRadius.circular(34.r),
-              borderSide: BorderSide(color: secondaryColorDark, width: 4))),
-      appBarTheme: const AppBarTheme(
-          centerTitle: true, elevation: 0, backgroundColor: Colors.transparent),
+              borderSide:
+                  const BorderSide(color: secondaryColorDark, width: 4))),
+      appBarTheme: AppBarTheme(
+          iconTheme: IconThemeData(color: primarycolorlight),
+          titleTextStyle: GoogleFonts.inter(
+              fontSize: 20,
+              fontWeight: FontWeight.w400,
+              color: primarycolorlight),
+          centerTitle: true,
+          elevation: 0,
+          backgroundColor: Colors.transparent),
       bottomNavigationBarTheme: BottomNavigationBarThemeData(
           backgroundColor: primaryColordark,
           showSelectedLabels: true,

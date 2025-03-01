@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:todo_app/models/theme.dart';
+import 'package:provider/provider.dart';
+import 'package:todo_app/providers/theme_provider.dart';
 import 'package:todo_app/widgets/taskitem.dart';
 
 class HomeTab extends StatelessWidget {
@@ -8,6 +9,7 @@ class HomeTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var provider = Provider.of<ThemeProvider>(context);
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: 80.h,
@@ -34,8 +36,11 @@ class HomeTab extends StatelessWidget {
           ),
         ),
         actions: [
-          const Icon(
-            Icons.sunny,
+          IconButton(
+            onPressed: () {
+              provider.changeTheme();
+            },
+            icon: Icon(Icons.sunny),
             color: Colors.white,
           ),
           SizedBox(

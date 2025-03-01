@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:todo_app/models/cache.dart';
 import 'package:todo_app/models/theme.dart';
 import 'package:todo_app/providers/theme_provider.dart';
+import 'package:todo_app/views/create_event.dart';
 import 'package:todo_app/views/forgetPassword.dart';
 import 'package:todo_app/views/homeview.dart';
 import 'package:todo_app/views/introductionview.dart';
@@ -53,7 +54,8 @@ class TodoApp extends StatelessWidget {
             LoginView.routeName: (context) => LoginView(),
             SignUpView.routeName: (context) => SignUpView(),
             HomeView.routeName: (context) => HomeView(),
-            ForgetPasswordView.routeName: (context) => ForgetPasswordView()
+            ForgetPasswordView.routeName: (context) => ForgetPasswordView(),
+            CreateEvent.routeName: (context) => CreateEvent(),
           },
           debugShowCheckedModeBanner: false,
         );

@@ -99,27 +99,30 @@ class IntroductionView extends StatelessWidget {
               children: [
                 Text("theme".tr(),
                     style: Theme.of(context).textTheme.titleLarge),
-                ToggleSwitch(
-                  minWidth: 70.0,
-                  initialLabelIndex:
-                      provider.themeMode == ThemeMode.light ? 0 : 1,
-                  cornerRadius: 20.0,
-                  activeFgColor: Colors.white,
-                  inactiveBgColor: Colors.grey,
-                  inactiveFgColor: Colors.white,
-                  totalSwitches: 2,
-                  icons: const [
-                    FontAwesomeIcons.lightbulb,
-                    FontAwesomeIcons.moon,
-                  ],
-                  activeBgColors: const [
-                    [MyThemeData.primarycolorlight],
-                    [Colors.orange]
-                  ],
-                  onToggle: (index) {
-                    provider.changeTheme();
-                    print('switched to: $index');
-                  },
+                Directionality(
+                  textDirection: ui.TextDirection.ltr,
+                  child: ToggleSwitch(
+                    minWidth: 70.0,
+                    initialLabelIndex:
+                        provider.themeMode == ThemeMode.light ? 0 : 1,
+                    cornerRadius: 20.0,
+                    activeFgColor: Colors.white,
+                    inactiveBgColor: Colors.grey,
+                    inactiveFgColor: Colors.white,
+                    totalSwitches: 2,
+                    icons: const [
+                      FontAwesomeIcons.lightbulb,
+                      FontAwesomeIcons.moon,
+                    ],
+                    activeBgColors: const [
+                      [MyThemeData.primarycolorlight],
+                      [Colors.orange]
+                    ],
+                    onToggle: (index) {
+                      provider.changeTheme();
+                      print('switched to: $index');
+                    },
+                  ),
                 ),
               ],
             ),

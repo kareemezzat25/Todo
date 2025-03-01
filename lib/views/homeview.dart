@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:todo_app/views/create_event.dart';
 import 'package:todo_app/views/tabs/favourite_tab.dart';
 import 'package:todo_app/views/tabs/home_tab.dart';
 import 'package:todo_app/views/tabs/map_tab.dart';
@@ -27,7 +28,9 @@ class _HomeViewState extends State<HomeView> {
     return Scaffold(
         body: tabs[selectedIndex],
         floatingActionButton: FloatingActionButton(
-          onPressed: () {},
+          onPressed: () {
+            Navigator.pushNamed(context, CreateEvent.routeName);
+          },
           child: const Icon(
             Icons.add,
             color: Colors.white,

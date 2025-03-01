@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:provider/provider.dart';
 import 'dart:ui' as ui; // Import dart:ui explicitly
 import 'package:todo_app/models/theme.dart';
+import 'package:todo_app/providers/theme_provider.dart';
 import 'package:todo_app/views/loginview.dart';
 import 'package:toggle_switch/toggle_switch.dart';
 
@@ -18,16 +20,18 @@ class SignUpView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var provider = Provider.of<ThemeProvider>(context);
     return Scaffold(
         appBar: AppBar(
-            iconTheme: const IconThemeData(color: Colors.black),
             title: Text(
-              "register".tr(),
-              style: Theme.of(context)
+          "register".tr(),
+          style: provider.themeMode == ThemeMode.dark
+              ? null
+              : Theme.of(context)
                   .textTheme
                   .titleLarge!
                   .copyWith(color: Colors.black, fontWeight: FontWeight.w400),
-            )),
+        )),
         body: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16.0),
           child: SingleChildScrollView(
@@ -47,10 +51,15 @@ class SignUpView extends StatelessWidget {
                       labelStyle: Theme.of(context)
                           .textTheme
                           .titleMedium!
-                          .copyWith(color: Theme.of(context).focusColor),
+                          .copyWith(
+                              color: provider.themeMode == ThemeMode.dark
+                                  ? MyThemeData.secondaryColorDark
+                                  : Theme.of(context).focusColor),
                       prefixIcon: Icon(
                         Icons.person,
-                        color: Theme.of(context).focusColor,
+                        color: provider.themeMode == ThemeMode.dark
+                            ? MyThemeData.secondaryColorDark
+                            : Theme.of(context).focusColor,
                       ),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(16.r),
@@ -75,10 +84,14 @@ class SignUpView extends StatelessWidget {
                       labelText: "email".tr(),
                       labelStyle:
                           Theme.of(context).textTheme.titleMedium!.copyWith(
-                                color: Theme.of(context).focusColor,
+                                color: provider.themeMode == ThemeMode.dark
+                                    ? MyThemeData.secondaryColorDark
+                                    : Theme.of(context).focusColor,
                               ),
                       prefixIcon: Icon(Icons.email,
-                          color: Theme.of(context).focusColor),
+                          color: provider.themeMode == ThemeMode.dark
+                              ? MyThemeData.secondaryColorDark
+                              : Theme.of(context).focusColor),
                       border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(16.r),
                           borderSide:
@@ -102,10 +115,15 @@ class SignUpView extends StatelessWidget {
                       labelStyle: Theme.of(context)
                           .textTheme
                           .titleMedium!
-                          .copyWith(color: Theme.of(context).focusColor),
+                          .copyWith(
+                              color: provider.themeMode == ThemeMode.dark
+                                  ? MyThemeData.secondaryColorDark
+                                  : Theme.of(context).focusColor),
                       prefixIcon: Icon(
                         Icons.lock,
-                        color: Theme.of(context).focusColor,
+                        color: provider.themeMode == ThemeMode.dark
+                            ? MyThemeData.secondaryColorDark
+                            : Theme.of(context).focusColor,
                       ),
                       border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(16.r),
@@ -130,10 +148,15 @@ class SignUpView extends StatelessWidget {
                       labelStyle: Theme.of(context)
                           .textTheme
                           .titleMedium!
-                          .copyWith(color: Theme.of(context).focusColor),
+                          .copyWith(
+                              color: provider.themeMode == ThemeMode.dark
+                                  ? MyThemeData.secondaryColorDark
+                                  : Theme.of(context).focusColor),
                       prefixIcon: Icon(
                         Icons.lock,
-                        color: Theme.of(context).focusColor,
+                        color: provider.themeMode == ThemeMode.dark
+                            ? MyThemeData.secondaryColorDark
+                            : Theme.of(context).focusColor,
                       ),
                       border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(16.r),
@@ -179,7 +202,10 @@ class SignUpView extends StatelessWidget {
                             style: Theme.of(context)
                                 .textTheme
                                 .titleMedium!
-                                .copyWith(color: Colors.black)),
+                                .copyWith(
+                                    color: provider.themeMode == ThemeMode.dark
+                                        ? MyThemeData.secondaryColorDark
+                                        : Colors.black)),
                         TextSpan(
                             text: "login".tr(),
                             style: Theme.of(context)

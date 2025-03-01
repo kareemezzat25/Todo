@@ -1,8 +1,10 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
 import 'package:todo_app/main.dart';
 import 'package:todo_app/models/theme.dart';
+import 'package:todo_app/providers/theme_provider.dart';
 
 class ForgetPasswordView extends StatelessWidget {
   static const String routeName = "forgetPassword";
@@ -11,10 +13,10 @@ class ForgetPasswordView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var provider = Provider.of<ThemeProvider>(context);
     return Scaffold(
         appBar: AppBar(
           title: Text("forget_password_title".tr()),
-          iconTheme: const IconThemeData(color: Colors.black),
         ),
         body: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16.0),
@@ -35,9 +37,14 @@ class ForgetPasswordView extends StatelessWidget {
                     labelStyle: Theme.of(context)
                         .textTheme
                         .titleMedium!
-                        .copyWith(color: Theme.of(context).focusColor),
-                    prefixIcon:
-                        Icon(Icons.email, color: Theme.of(context).focusColor),
+                        .copyWith(
+                            color: provider.themeMode == ThemeMode.dark
+                                ? MyThemeData.secondaryColorDark
+                                : Theme.of(context).focusColor),
+                    prefixIcon: Icon(Icons.email,
+                        color: provider.themeMode == ThemeMode.dark
+                            ? MyThemeData.secondaryColorDark
+                            : Theme.of(context).focusColor),
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(16.r),
                         borderSide:
