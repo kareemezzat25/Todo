@@ -14,6 +14,20 @@ class CreateEventProvider extends ChangeNotifier {
     "meeting",
     "workshop"
   ];
+
+  DateTime selectedDate = DateTime.now();
+  TimeOfDay selectedTime = TimeOfDay(hour: 0, minute: 0);
+
+  changeDate(DateTime date) {
+    selectedDate = date;
+    notifyListeners();
+  }
+
+  changeTime(TimeOfDay time) {
+    selectedTime = time;
+    notifyListeners();
+  }
+
   changeCategory(int index) {
     selectedIndex = index;
     notifyListeners();

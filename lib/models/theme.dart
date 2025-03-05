@@ -105,5 +105,13 @@ class MyThemeData {
           titleSmall: GoogleFonts.inter(
               fontSize: 12.sp,
               fontWeight: FontWeight.w700,
-              color: primarycolorlight)));
+              color: primarycolorlight),
+          bodyLarge: GoogleFonts.inter(
+              fontSize: 24.sp,
+              fontWeight: FontWeight.w700,
+              color: Colors.white),
+          bodySmall: GoogleFonts.inter(
+              fontSize: 14.sp,
+              fontWeight: FontWeight.w400,
+              color: Colors.white)));
 }

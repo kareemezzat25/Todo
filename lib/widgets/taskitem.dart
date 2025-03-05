@@ -14,12 +14,19 @@ class TaskItem extends StatelessWidget {
           Stack(
             alignment: Alignment.bottomCenter,
             children: [
-              ClipRRect(
-                borderRadius: BorderRadius.circular(16.r),
-                child: Image.asset(
-                  "assets/images/sports.png",
-                  height: 203.h,
-                  width: 360.w,
+              Container(
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(16.r),
+                    border: Border.all(
+                        color: MyThemeData.primarycolorlight, width: 2)),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(12.r),
+                  child: Image.asset(
+                    "assets/images/sports.png",
+                    height: 203.h,
+                    width: 360.w,
+                    fit: BoxFit.cover,
+                  ),
                 ),
               ),
               Container(

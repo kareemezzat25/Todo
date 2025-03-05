@@ -7,7 +7,10 @@ import 'package:todo_app/providers/theme_provider.dart';
 
 class CreateEvent extends StatelessWidget {
   static const String routeName = "createEvent";
-  const CreateEvent({super.key});
+  static const Color color = Color(0xFF1C1C1C);
+  TextEditingController titleController = TextEditingController();
+  TextEditingController descriptionController = TextEditingController();
+  CreateEvent({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +21,7 @@ class CreateEvent extends StatelessWidget {
         var themeProvider = Provider.of<ThemeProvider>(context);
         return Scaffold(
             appBar: AppBar(
-              title: Text("Create Event"),
+              title: const Text("Create Event"),
             ),
             body: Padding(
               padding: EdgeInsets.symmetric(horizontal: 16.w),
@@ -80,21 +83,35 @@ class CreateEvent extends StatelessWidget {
                     SizedBox(
                       height: 16.h,
                     ),
-                    Text(
-                      "Title",
-                      style: Theme.of(context).textTheme.titleMedium,
-                    ),
+                    Text("Title",
+                        style: Theme.of(context)
+                            .textTheme
+                            .titleMedium!
+                            .copyWith(
+                                color: themeProvider.themeMode == ThemeMode.dark
+                                    ? MyThemeData.secondaryColorDark
+                                    : color)),
                     SizedBox(
                       height: 8.h,
                     ),
                     TextField(
+                      controller: titleController,
                       decoration: InputDecoration(
                           prefixIcon: Icon(
                             Icons.edit,
-                            color: Theme.of(context).focusColor,
+                            color: themeProvider.themeMode == ThemeMode.dark
+                                ? MyThemeData.secondaryColorDark
+                                : Theme.of(context).focusColor,
                           ),
                           labelText: "Event Title",
-                          labelStyle: Theme.of(context).textTheme.titleMedium,
+                          labelStyle: Theme.of(context)
+                              .textTheme
+                              .titleMedium!
+                              .copyWith(
+                                  color:
+                                      themeProvider.themeMode == ThemeMode.dark
+                                          ? MyThemeData.secondaryColorDark
+                                          : Theme.of(context).focusColor),
                           border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(16.r),
                               borderSide: BorderSide(
@@ -106,22 +123,34 @@ class CreateEvent extends StatelessWidget {
                           focusedBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(16.r),
                               borderSide: BorderSide(
-                                  color: Theme.of(context).primaryColor))),
+                                  color: Theme.of(context).focusColor))),
                     ),
                     SizedBox(
                       height: 16.h,
                     ),
                     Text(
                       "Description",
-                      style: Theme.of(context).textTheme.titleMedium,
+                      style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                          color: themeProvider.themeMode == ThemeMode.dark
+                              ? MyThemeData.secondaryColorDark
+                              : color),
                     ),
                     SizedBox(
                       height: 8.h,
                     ),
                     TextField(
+                      maxLines: 4,
+                      controller: descriptionController,
                       decoration: InputDecoration(
                           labelText: "Event Description",
-                          labelStyle: Theme.of(context).textTheme.titleMedium,
+                          labelStyle: Theme.of(context)
+                              .textTheme
+                              .titleMedium!
+                              .copyWith(
+                                  color:
+                                      themeProvider.themeMode == ThemeMode.dark
+                                          ? MyThemeData.secondaryColorDark
+                                          : Theme.of(context).focusColor),
                           border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(16.r),
                               borderSide: BorderSide(
@@ -133,7 +162,7 @@ class CreateEvent extends StatelessWidget {
                           focusedBorder: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(16.r),
                               borderSide: BorderSide(
-                                  color: Theme.of(context).primaryColor))),
+                                  color: Theme.of(context).focusColor))),
                     ),
                     SizedBox(
                       height: 16.h,
@@ -142,19 +171,43 @@ class CreateEvent extends StatelessWidget {
                       children: [
                         Icon(
                           Icons.date_range,
-                          color: Colors.black,
+                          color: themeProvider.themeMode == ThemeMode.dark
+                              ? MyThemeData.secondaryColorDark
+                              : color,
                         ),
                         SizedBox(
                           width: 12.w,
                         ),
                         Text(
                           "Event Date",
-                          style: Theme.of(context).textTheme.titleMedium,
+                          style: Theme.of(context)
+                              .textTheme
+                              .titleMedium!
+                              .copyWith(
+                                  color:
+                                      themeProvider.themeMode == ThemeMode.dark
+                                          ? MyThemeData.secondaryColorDark
+                                          : color),
                         ),
-                        Spacer(),
-                        Text(
-                          "Choose Date",
-                          style: Theme.of(context).textTheme.titleMedium,
+                        const Spacer(),
+                        InkWell(
+                          onTap: () async {
+                            var date = await showDatePicker(
+                                context: context,
+                                firstDate: DateTime.now()
+                                    .subtract(Duration(days: 365)),
+                                initialDate: DateTime.now(),
+                                lastDate:
+                                    DateTime.now().add(Duration(days: 365)));
+
+                            if (date != null) {
+                              provider.changeDate(date);
+                            }
+                          },
+                          child: Text(
+                            provider.selectedDate.toString().substring(0, 10),
+                            style: Theme.of(context).textTheme.titleMedium,
+                          ),
                         )
                       ],
                     ),
@@ -163,19 +216,39 @@ class CreateEvent extends StatelessWidget {
                       children: [
                         Icon(
                           Icons.access_time,
-                          color: Colors.black,
+                          color: themeProvider.themeMode == ThemeMode.dark
+                              ? MyThemeData.secondaryColorDark
+                              : color,
                         ),
                         SizedBox(
                           width: 12.w,
                         ),
                         Text(
                           "Event Time",
-                          style: Theme.of(context).textTheme.titleMedium,
+                          style: Theme.of(context)
+                              .textTheme
+                              .titleMedium!
+                              .copyWith(
+                                  color:
+                                      themeProvider.themeMode == ThemeMode.dark
+                                          ? MyThemeData.secondaryColorDark
+                                          : color),
                         ),
-                        Spacer(),
-                        Text(
-                          "Choose Time",
-                          style: Theme.of(context).textTheme.titleMedium,
+                        const Spacer(),
+                        InkWell(
+                          onTap: () async {
+                            var time = await showTimePicker(
+                                context: context,
+                                initialTime: TimeOfDay(hour: 0, minute: 0));
+
+                            if (time != null) {
+                              provider.changeTime(time);
+                            }
+                          },
+                          child: Text(
+                            provider.selectedTime.toString().substring(9, 16),
+                            style: Theme.of(context).textTheme.titleMedium,
+                          ),
                         )
                       ],
                     ),
@@ -184,7 +257,10 @@ class CreateEvent extends StatelessWidget {
                     ),
                     Text(
                       "Location",
-                      style: Theme.of(context).textTheme.titleMedium,
+                      style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                          color: themeProvider.themeMode == ThemeMode.dark
+                              ? MyThemeData.secondaryColorDark
+                              : color),
                     ),
                     SizedBox(
                       height: 8.h,
@@ -192,24 +268,24 @@ class CreateEvent extends StatelessWidget {
                     ListTile(
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(16.r),
-                          side: BorderSide(
-                              color: Theme.of(context).primaryColor)),
+                          side: const BorderSide(
+                              color: MyThemeData.primarycolorlight)),
                       leading: Container(
                         width: 46.w,
                         height: 46.h,
-                        child: Icon(Icons.pin_drop, color: Colors.white),
+                        child: const Icon(Icons.pin_drop, color: Colors.white),
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(8.r),
-                            color: Theme.of(context).primaryColor),
+                            color: MyThemeData.primarycolorlight),
                       ),
                       title: Text(
                         "Choose Event Location",
                         style: Theme.of(context).textTheme.titleMedium,
                       ),
-                      trailing: Icon(
+                      trailing: const Icon(
                         Icons.arrow_forward_ios,
                         size: 24,
-                        color: Theme.of(context).primaryColor,
+                        color: MyThemeData.primarycolorlight,
                       ),
                     ),
                     SizedBox(
@@ -221,7 +297,7 @@ class CreateEvent extends StatelessWidget {
                             minimumSize: Size(361.w, 55.h),
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(16.r)),
-                            backgroundColor: Theme.of(context).primaryColor),
+                            backgroundColor: MyThemeData.primarycolorlight),
                         child: Text(
                           "Add Event",
                           style: Theme.of(context)
