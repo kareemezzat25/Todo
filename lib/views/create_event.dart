@@ -1,6 +1,9 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
+import 'package:todo_app/firebase/firebase_manager.dart';
+import 'package:todo_app/models/eventmodel.dart';
 import 'package:todo_app/models/theme.dart';
 import 'package:todo_app/providers/create_event_provider.dart';
 import 'package:todo_app/providers/theme_provider.dart';
@@ -96,6 +99,7 @@ class CreateEvent extends StatelessWidget {
                     ),
                     TextField(
                       controller: titleController,
+                      style: Theme.of(context).textTheme.titleMedium,
                       decoration: InputDecoration(
                           prefixIcon: Icon(
                             Icons.edit,
@@ -141,6 +145,7 @@ class CreateEvent extends StatelessWidget {
                     TextField(
                       maxLines: 4,
                       controller: descriptionController,
+                      style: Theme.of(context).textTheme.titleMedium,
                       decoration: InputDecoration(
                           labelText: "Event Description",
                           labelStyle: Theme.of(context)
@@ -246,7 +251,7 @@ class CreateEvent extends StatelessWidget {
                             }
                           },
                           child: Text(
-                            provider.selectedTime.toString().substring(9, 16),
+                            provider.selectedTime.toString().substring(10, 15),
                             style: Theme.of(context).textTheme.titleMedium,
                           ),
                         )
@@ -292,7 +297,18 @@ class CreateEvent extends StatelessWidget {
                       height: 16.h,
                     ),
                     ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          String formattedTime =
+                              "${provider.selectedTime.hour}:${provider.selectedTime.minute}";
+                          FirebaseManager.addEvent(EventModel(
+                              title: titleController.text,
+                              category: provider
+                                  .eventCategories[provider.selectedIndex],
+                              date:
+                                  provider.selectedDate.millisecondsSinceEpoch,
+                              time: formattedTime,
+                              description: descriptionController.text));
+                        },
                         style: ElevatedButton.styleFrom(
                             minimumSize: Size(361.w, 55.h),
                             shape: RoundedRectangleBorder(
