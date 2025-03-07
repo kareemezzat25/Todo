@@ -32,6 +32,7 @@ class ForgetPasswordView extends StatelessWidget {
               ),
               TextField(
                 controller: emailController,
+                style: Theme.of(context).textTheme.titleMedium,
                 decoration: InputDecoration(
                     labelText: "email".tr(),
                     labelStyle: Theme.of(context)

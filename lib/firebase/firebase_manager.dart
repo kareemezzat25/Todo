@@ -20,8 +20,19 @@ class FirebaseManager {
     return docRef.set(event);
   }
 
-  static Future<QuerySnapshot<EventModel>> getEvents() {
+  static Stream<QuerySnapshot<EventModel>> getEvents() {
     var collection = getEventCollection();
-    return collection.get();
+    return collection.orderBy("date").snapshots();
+  }
+
+  static Future<void> deleteEvent(String id) {
+    var collection = getEventCollection();
+    return collection.doc(id).delete();
+  }
+
+  static Future<void> updateEvent(EventModel event) {
+    var collection = getEventCollection();
+
+    return collection.doc(event.id).update(event.toJson());
   }
 }

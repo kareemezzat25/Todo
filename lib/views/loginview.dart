@@ -42,6 +42,7 @@ class LoginView extends StatelessWidget {
                 ),
                 TextField(
                   controller: emailController,
+                  style: Theme.of(context).textTheme.titleMedium,
                   decoration: InputDecoration(
                       labelText: "email".tr(),
                       prefixIcon: Icon(
@@ -75,6 +76,7 @@ class LoginView extends StatelessWidget {
                 ),
                 TextField(
                   controller: passwordController,
+                  style: Theme.of(context).textTheme.titleMedium,
                   decoration: InputDecoration(
                       labelText: "password".tr(),
                       labelStyle: Theme.of(context)

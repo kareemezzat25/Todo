@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
+import 'package:todo_app/firebase/firebase_manager.dart';
 import 'package:todo_app/models/eventmodel.dart';
 import 'package:todo_app/models/theme.dart';
 
@@ -45,17 +46,43 @@ class TaskItem extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
-                      event.title,
-                      style: Theme.of(context)
-                          .textTheme
-                          .titleSmall!
-                          .copyWith(fontWeight: FontWeight.w700),
+                    Expanded(
+                      child: Text(
+                        event.title,
+                        style: Theme.of(context)
+                            .textTheme
+                            .titleSmall!
+                            .copyWith(fontWeight: FontWeight.w700),
+                      ),
                     ),
-                    Icon(
-                      Icons.favorite,
-                      color: Theme.of(context).primaryColor,
-                    )
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 8.w),
+                          child: Icon(
+                            Icons.edit,
+                            color: Theme.of(context).primaryColor,
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 8.w),
+                          child: InkWell(
+                            onTap: () {
+                              FirebaseManager.deleteEvent(event.id);
+                            },
+                            child: Icon(
+                              Icons.delete,
+                              color: Theme.of(context).primaryColor,
+                            ),
+                          ),
+                        ),
+                        Icon(
+                          Icons.favorite,
+                          color: Theme.of(context).primaryColor,
+                        )
+                      ],
+                    ),
                   ],
                 ),
               )

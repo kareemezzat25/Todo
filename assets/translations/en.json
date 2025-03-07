@@ -23,6 +23,7 @@
     "don't_have_account":"Don’t Have Account ?",
     "create_account":"Create Account",
     "or":"Or",
-    "login_with_google":"Login With Google"
+    "login_with_google":"Login With Google",
+    "logout":"Logout"
 
 }

@@ -46,6 +46,7 @@ class SignUpView extends StatelessWidget {
                 ),
                 TextField(
                   controller: nameController,
+                  style: Theme.of(context).textTheme.titleMedium,
                   decoration: InputDecoration(
                       labelText: "name".tr(),
                       labelStyle: Theme.of(context)
@@ -80,6 +81,7 @@ class SignUpView extends StatelessWidget {
                 ),
                 TextField(
                   controller: emailController,
+                  style: Theme.of(context).textTheme.titleMedium,
                   decoration: InputDecoration(
                       labelText: "email".tr(),
                       labelStyle:
@@ -110,6 +112,7 @@ class SignUpView extends StatelessWidget {
                 ),
                 TextField(
                   controller: passwordController,
+                  style: Theme.of(context).textTheme.titleMedium,
                   decoration: InputDecoration(
                       labelText: "password".tr(),
                       labelStyle: Theme.of(context)
@@ -143,6 +146,7 @@ class SignUpView extends StatelessWidget {
                 ),
                 TextField(
                   controller: rePasswordController,
+                  style: Theme.of(context).textTheme.titleMedium,
                   decoration: InputDecoration(
                       labelText: "re_password".tr(),
                       labelStyle: Theme.of(context)

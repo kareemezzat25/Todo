@@ -98,8 +98,8 @@ class HomeTab extends StatelessWidget {
           ),
         ),
       ),
-      body: FutureBuilder<QuerySnapshot<EventModel>>(
-        future: FirebaseManager.getEvents(),
+      body: StreamBuilder<QuerySnapshot<EventModel>>(
+        stream: FirebaseManager.getEvents(),
         builder: (context, snapshot) {
           return Padding(
             padding: EdgeInsets.symmetric(vertical: 16.h, horizontal: 16.w),
