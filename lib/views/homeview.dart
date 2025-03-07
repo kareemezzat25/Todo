@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:todo_app/views/create_event.dart';
 import 'package:todo_app/views/tabs/favourite_tab.dart';
 import 'package:todo_app/views/tabs/home_tab.dart';
-import 'package:todo_app/views/tabs/map_tab.dart';
+import 'package:todo_app/views/tabs/map/map_tab.dart';
 import 'package:todo_app/views/tabs/profile_tab.dart';
 
 class HomeView extends StatefulWidget {

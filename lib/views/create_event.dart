@@ -297,7 +297,17 @@ class CreateEvent extends StatelessWidget {
                       height: 16.h,
                     ),
                     ElevatedButton(
-                        onPressed: () {
+                        onPressed: () async {
+                          showDialog(
+                              context: context,
+                              builder: (context) {
+                                return Center(
+                                  child: CircularProgressIndicator(
+                                    color: MyThemeData.primarycolorlight,
+                                  ),
+                                );
+                              });
+                          await Future.delayed(Duration(seconds: 2));
                           String formattedTime =
                               "${provider.selectedTime.hour}:${provider.selectedTime.minute}";
                           FirebaseManager.addEvent(EventModel(
@@ -308,6 +318,8 @@ class CreateEvent extends StatelessWidget {
                                   provider.selectedDate.millisecondsSinceEpoch,
                               time: formattedTime,
                               description: descriptionController.text));
+                          Navigator.pop(context);
+                          Navigator.pop(context);
                         },
                         style: ElevatedButton.styleFrom(
                             minimumSize: Size(361.w, 55.h),

@@ -1,6 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
+import 'package:todo_app/firebase/firebase_manager.dart';
+import 'package:todo_app/models/eventmodel.dart';
 import 'package:todo_app/providers/theme_provider.dart';
 import 'package:todo_app/widgets/taskitem.dart';
 
@@ -95,18 +98,25 @@ class HomeTab extends StatelessWidget {
           ),
         ),
       ),
-      body: Padding(
-        padding: EdgeInsets.symmetric(vertical: 16.h, horizontal: 16.w),
-        child: ListView.separated(
-            itemBuilder: (context, index) {
-              return TaskItem();
-            },
-            separatorBuilder: (context, index) {
-              return SizedBox(
-                height: 16.h,
-              );
-            },
-            itemCount: 4),
+      body: FutureBuilder<QuerySnapshot<EventModel>>(
+        future: FirebaseManager.getEvents(),
+        builder: (context, snapshot) {
+          return Padding(
+            padding: EdgeInsets.symmetric(vertical: 16.h, horizontal: 16.w),
+            child: ListView.separated(
+                itemBuilder: (context, index) {
+                  return TaskItem(
+                    event: snapshot.data!.docs[index].data(),
+                  );
+                },
+                separatorBuilder: (context, index) {
+                  return SizedBox(
+                    height: 16.h,
+                  );
+                },
+                itemCount: snapshot.data?.docs.length ?? 0),
+          );
+        },
       ),
     );
   }

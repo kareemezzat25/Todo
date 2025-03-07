@@ -1,12 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:intl/intl.dart';
+import 'package:todo_app/models/eventmodel.dart';
 import 'package:todo_app/models/theme.dart';
 
 class TaskItem extends StatelessWidget {
-  const TaskItem({super.key});
+  EventModel event;
+  TaskItem({super.key, required this.event});
 
   @override
   Widget build(BuildContext context) {
+    DateTime date = DateTime.fromMillisecondsSinceEpoch(event.date);
+
     return Card(
       elevation: 3,
       child: Stack(
@@ -22,7 +27,7 @@ class TaskItem extends StatelessWidget {
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(12.r),
                   child: Image.asset(
-                    "assets/images/sports.png",
+                    "assets/images/${event.category}.png",
                     height: 203.h,
                     width: 360.w,
                     fit: BoxFit.cover,
@@ -41,7 +46,7 @@ class TaskItem extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      "This is a Birthday Party ",
+                      event.title,
                       style: Theme.of(context)
                           .textTheme
                           .titleSmall!
@@ -65,11 +70,11 @@ class TaskItem extends StatelessWidget {
             child: Column(
               children: [
                 Text(
-                  "21",
+                  DateFormat('d').format(date),
                   style: Theme.of(context).textTheme.titleLarge,
                 ),
                 Text(
-                  "Nov",
+                  DateFormat('MMM').format(date),
                   style: Theme.of(context)
                       .textTheme
                       .titleLarge!

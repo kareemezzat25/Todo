@@ -12,11 +12,16 @@ class FirebaseManager {
     });
   }
 
-  static void addEvent(EventModel event) {
+  static Future<void> addEvent(EventModel event) {
     var collection = getEventCollection();
     var docRef = collection.doc();
     event.id = docRef.id;
 
-    docRef.set(event);
+    return docRef.set(event);
+  }
+
+  static Future<QuerySnapshot<EventModel>> getEvents() {
+    var collection = getEventCollection();
+    return collection.get();
   }
 }
