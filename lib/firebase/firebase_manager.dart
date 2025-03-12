@@ -32,25 +32,43 @@ class FirebaseManager {
     return docRef.set(event);
   }
 
+  static Future<void> addUser(UserModel user) {
+    var collection = getUserCollection();
+    var docRef = collection.doc(user.id);
+    return docRef.set(user);
+  }
+
   static Stream<QuerySnapshot<EventModel>> getEvents() {
     var collection = getEventCollection();
     return collection.orderBy("date").snapshots();
   }
 
-  static createUser(String email, String password) async {
+  static createUser(String email, String password, String userName,
+      Function onSuccess, Function onError, Function onLoading) async {
     try {
+      onLoading();
       final credential =
           await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
+
+      UserModel user = UserModel(
+          id: credential.user!.uid,
+          userName: userName,
+          email: email,
+          createdAt: DateTime.now().millisecondsSinceEpoch);
+      await addUser(user);
+      credential.user!.sendEmailVerification();
+      onSuccess();
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
-        print('The password provided is too weak.');
+        onError(e.message);
       } else if (e.code == 'email-already-in-use') {
-        print('The account already exists for that email.');
+        onError(e.message);
       }
     } catch (e) {
+      onError("SomeThing went wrong");
       print(e);
     }
   }

@@ -231,8 +231,52 @@ class SignUpView extends StatelessWidget {
                   ElevatedButton(
                       onPressed: () {
                         if (formKey.currentState!.validate()) {
-                          FirebaseManager.createUser(
-                              emailController.text, passwordController.text);
+                          FirebaseManager.createUser(emailController.text,
+                              passwordController.text, nameController.text, () {
+                            Navigator.pop(context);
+                            Navigator.pushNamedAndRemoveUntil(
+                                context, LoginView.routeName, (route) => false);
+                          }, (messsage) {
+                            Navigator.pop(context);
+                            showDialog(
+                                context: context,
+                                builder: (context) => AlertDialog(
+                                      title: Text(
+                                        "SomeThing went wrong",
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .titleMedium,
+                                      ),
+                                      content: Text(messsage),
+                                      actions: [
+                                        ElevatedButton(
+                                            onPressed: () {
+                                              Navigator.pop(context);
+                                            },
+                                            style: ElevatedButton.styleFrom(
+                                                shape: RoundedRectangleBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            16.r)),
+                                                backgroundColor: MyThemeData
+                                                    .primarycolorlight),
+                                            child: Text(
+                                              "OK",
+                                              style: TextStyle(
+                                                  color: Colors.white),
+                                            ))
+                                      ],
+                                    ));
+                          }, () async {
+                            showDialog(
+                                context: context,
+                                builder: (context) => Center(
+                                      child: CircularProgressIndicator(
+                                        color: MyThemeData.primarycolorlight,
+                                      ),
+                                    ));
+                            await Future.delayed(Duration(seconds: 2));
+                          });
                         }
                       },
                       child: Text(
