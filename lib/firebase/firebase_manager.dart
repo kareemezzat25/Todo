@@ -73,6 +73,23 @@ class FirebaseManager {
     }
   }
 
+  static login(String email, String password, Function onSuccess,
+      Function onError, Function onloading) async {
+    try {
+      onloading();
+      final credential = await FirebaseAuth.instance
+          .signInWithEmailAndPassword(email: email, password: password);
+
+      if (credential.user!.emailVerified) {
+        onSuccess();
+      } else {
+        onError("Email is not verified, Please check your mail and verify");
+      }
+    } on FirebaseAuthException catch (e) {
+      onError("Email or password is not valid");
+    }
+  }
+
   static Future<void> deleteEvent(String id) {
     var collection = getEventCollection();
     return collection.doc(id).delete();
