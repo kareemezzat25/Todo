@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
@@ -25,11 +26,11 @@ class HomeTab extends StatelessWidget {
         automaticallyImplyLeading: false,
         backgroundColor: Theme.of(context).primaryColor,
         title: Padding(
-          padding: const EdgeInsets.only(left: 16.0),
+          padding: EdgeInsets.symmetric(horizontal: 12.w),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text("Welcome Back ✨",
+              Text("welcome_back".tr(),
                   style: Theme.of(context).textTheme.bodySmall),
               Text(
                 "Kareem elfeky",
@@ -49,17 +50,25 @@ class HomeTab extends StatelessWidget {
           SizedBox(
             width: 10.w,
           ),
-          Container(
-            margin: EdgeInsets.only(right: 16.w),
-            padding: const EdgeInsets.all(8),
-            decoration: BoxDecoration(
-                color: Colors.white, borderRadius: BorderRadius.circular(8)),
-            child: Text(
-              "EN",
-              style: Theme.of(context)
-                  .textTheme
-                  .titleLarge!
-                  .copyWith(fontSize: 14.sp),
+          InkWell(
+            onTap: () {
+              context.setLocale(
+                  Locale(context.locale.toString() == "en" ? "ar" : "en"));
+            },
+            child: Container(
+              margin: context.locale.toString() == "en"
+                  ? EdgeInsets.only(right: 16.w)
+                  : EdgeInsets.only(left: 16.w),
+              padding: const EdgeInsets.all(8),
+              decoration: BoxDecoration(
+                  color: Colors.white, borderRadius: BorderRadius.circular(8)),
+              child: Text(
+                "EN",
+                style: Theme.of(context)
+                    .textTheme
+                    .titleLarge!
+                    .copyWith(fontSize: 14.sp),
+              ),
             ),
           )
         ],

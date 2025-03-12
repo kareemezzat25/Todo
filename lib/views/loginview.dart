@@ -124,7 +124,7 @@ class LoginView extends StatelessWidget {
                     textAlign: TextAlign.right,
                     style: Theme.of(context).textTheme.titleMedium!.copyWith(
                         decoration: TextDecoration.underline,
-                        decorationColor: Theme.of(context).primaryColor),
+                        decorationColor: MyThemeData.primarycolorlight),
                   ),
                 ),
                 SizedBox(

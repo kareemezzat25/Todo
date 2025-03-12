@@ -17,9 +17,9 @@ class _ProfileTabState extends State<ProfileTab> {
   Widget build(BuildContext context) {
     var themeprovider = Provider.of<ThemeProvider>(context);
     String selectedLanguage =
-        context.locale.toString() == "en" ? "English" : "Arabic";
+        context.locale.toString() == "en" ? "english" : "arabic";
     String selectedTheme =
-        themeprovider.themeMode == ThemeMode.dark ? "Dark" : "Light";
+        themeprovider.themeMode == ThemeMode.dark ? "dark" : "light";
 
     return Scaffold(
       appBar: AppBar(
@@ -97,11 +97,11 @@ class _ProfileTabState extends State<ProfileTab> {
                     isExpanded: true,
                     dropdownColor: Colors.white,
                     value: selectedLanguage,
-                    items: ["Arabic", "English"].map((String language) {
+                    items: ["arabic", "english"].map((String language) {
                       return DropdownMenuItem<String>(
                         value: language,
                         child: Text(
-                          language,
+                          language.tr(),
                           style: Theme.of(context).textTheme.titleLarge,
                         ),
                       );
@@ -110,7 +110,7 @@ class _ProfileTabState extends State<ProfileTab> {
                       setState(() {
                         selectedLanguage = newValue!;
                         context.setLocale(Locale(
-                            selectedLanguage == "English" ? "en" : "ar"));
+                            selectedLanguage == "english" ? "en" : "ar"));
                       });
                     },
                     icon: const Icon(Icons.arrow_drop_down,
@@ -144,11 +144,11 @@ class _ProfileTabState extends State<ProfileTab> {
                     isExpanded: true,
                     dropdownColor: Colors.white,
                     value: selectedTheme,
-                    items: ["Light", "Dark"].map((String theme) {
+                    items: ["light", "dark"].map((String theme) {
                       return DropdownMenuItem<String>(
                         value: theme,
                         child: Text(
-                          theme,
+                          theme.tr(),
                           style: Theme.of(context).textTheme.titleLarge,
                         ),
                       );

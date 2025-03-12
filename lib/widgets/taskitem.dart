@@ -16,6 +16,7 @@ class TaskItem extends StatelessWidget {
     return Card(
       elevation: 3,
       child: Stack(
+        alignment: Alignment.topLeft,
         children: [
           Stack(
             alignment: Alignment.bottomCenter,

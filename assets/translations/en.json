@@ -24,6 +24,11 @@
     "create_account":"Create Account",
     "or":"Or",
     "login_with_google":"Login With Google",
-    "logout":"Logout"
+    "logout":"Logout",
+    "arabic":"Arabic",
+    "english":"English",
+    "light":"Light",
+    "dark":"Dark",
+    "welcome_back":"Welcome Back"
 
 }
