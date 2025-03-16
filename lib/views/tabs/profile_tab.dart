@@ -2,8 +2,11 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
+import 'package:todo_app/firebase/firebase_manager.dart';
 import 'package:todo_app/models/theme.dart';
 import 'package:todo_app/providers/theme_provider.dart';
+import 'package:todo_app/providers/userprovider.dart';
+import 'package:todo_app/views/loginview.dart';
 
 class ProfileTab extends StatefulWidget {
   const ProfileTab({super.key});
@@ -16,6 +19,7 @@ class _ProfileTabState extends State<ProfileTab> {
   @override
   Widget build(BuildContext context) {
     var themeprovider = Provider.of<ThemeProvider>(context);
+    var userprovider = Provider.of<UserProvider>(context);
     String selectedLanguage =
         context.locale.toString() == "en" ? "english" : "arabic";
     String selectedTheme =
@@ -44,7 +48,7 @@ class _ProfileTabState extends State<ProfileTab> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "kareem elfeky",
+                    userprovider.userModel?.userName ?? "",
                     style: Theme.of(context)
                         .textTheme
                         .titleLarge!
@@ -54,7 +58,7 @@ class _ProfileTabState extends State<ProfileTab> {
                     height: 10.h,
                   ),
                   Text(
-                    "kareemeezzat900@gmail.com",
+                    userprovider.userModel?.email ?? "",
                     style: Theme.of(context)
                         .textTheme
                         .titleMedium!
@@ -167,7 +171,18 @@ class _ProfileTabState extends State<ProfileTab> {
             ),
             const Spacer(),
             ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  FirebaseManager.logOut().then((_) async {
+                    Center(
+                      child: CircularProgressIndicator(
+                        color: MyThemeData.primarycolorlight,
+                      ),
+                    );
+                    await Future.delayed(Duration(seconds: 2));
+                    Navigator.pushNamedAndRemoveUntil(
+                        context, LoginView.routeName, (route) => false);
+                  });
+                },
                 style: ElevatedButton.styleFrom(
                     padding: const EdgeInsets.all(16),
                     backgroundColor: const Color(0xFFFF5659),

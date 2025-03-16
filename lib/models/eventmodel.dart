@@ -6,6 +6,7 @@ class EventModel {
   int date;
   String time;
   bool isDone;
+  String userId;
 
   EventModel(
       {this.id = "",
@@ -14,7 +15,8 @@ class EventModel {
       required this.date,
       required this.description,
       required this.time,
-      this.isDone = false});
+      this.isDone = false,
+      required this.userId});
 
   static fromJson(Map<String, dynamic> json) {
     return EventModel(
@@ -24,7 +26,8 @@ class EventModel {
         date: json['date'],
         description: json['description'],
         time: json['time'],
-        isDone: json['isDone']);
+        isDone: json['isDone'],
+        userId: json['userId']);
   }
 
   Map<String, dynamic> toJson() {
@@ -35,7 +38,8 @@ class EventModel {
       "description": description,
       "date": date,
       "time": time,
-      "isDone": isDone
+      "isDone": isDone,
+      "userId": userId
     };
   }
 }

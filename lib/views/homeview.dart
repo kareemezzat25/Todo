@@ -16,7 +16,7 @@ class HomeView extends StatefulWidget {
 
 class _HomeViewState extends State<HomeView> {
   List<Widget> tabs = [
-    const HomeTab(),
+    HomeTab(),
     const MapTab(),
     const FavouriteTab(),
     const ProfileTab()

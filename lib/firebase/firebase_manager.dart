@@ -38,9 +38,20 @@ class FirebaseManager {
     return docRef.set(user);
   }
 
-  static Stream<QuerySnapshot<EventModel>> getEvents() {
+  static Stream<QuerySnapshot<EventModel>> getEvents(String categoryName) {
     var collection = getEventCollection();
-    return collection.orderBy("date").snapshots();
+    if (categoryName == "All") {
+      return collection
+          .orderBy("date")
+          .where("userId", isEqualTo: FirebaseAuth.instance.currentUser!.uid)
+          .snapshots();
+    } else {
+      return collection
+          .orderBy("date")
+          .where("userId", isEqualTo: FirebaseAuth.instance.currentUser!.uid)
+          .where("category", isEqualTo: categoryName)
+          .snapshots();
+    }
   }
 
   static createUser(String email, String password, String userName,
@@ -90,6 +101,12 @@ class FirebaseManager {
     }
   }
 
+  static Future<UserModel?> readUserData(String id) async {
+    var collection = getUserCollection();
+    DocumentSnapshot<UserModel> snapshot = await collection.doc(id).get();
+    return snapshot.data();
+  }
+
   static Future<void> deleteEvent(String id) {
     var collection = getEventCollection();
     return collection.doc(id).delete();
@@ -99,5 +116,9 @@ class FirebaseManager {
     var collection = getEventCollection();
 
     return collection.doc(event.id).update(event.toJson());
+  }
+
+  static Future<void> logOut() async {
+    await FirebaseAuth.instance.signOut();
   }
 }

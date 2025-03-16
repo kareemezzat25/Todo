@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -200,10 +201,10 @@ class CreateEvent extends StatelessWidget {
                             var date = await showDatePicker(
                                 context: context,
                                 firstDate: DateTime.now()
-                                    .subtract(Duration(days: 365)),
+                                    .subtract(const Duration(days: 365)),
                                 initialDate: DateTime.now(),
-                                lastDate:
-                                    DateTime.now().add(Duration(days: 365)));
+                                lastDate: DateTime.now()
+                                    .add(const Duration(days: 365)));
 
                             if (date != null) {
                               provider.changeDate(date);
@@ -244,7 +245,8 @@ class CreateEvent extends StatelessWidget {
                           onTap: () async {
                             var time = await showTimePicker(
                                 context: context,
-                                initialTime: TimeOfDay(hour: 0, minute: 0));
+                                initialTime:
+                                    const TimeOfDay(hour: 0, minute: 0));
 
                             if (time != null) {
                               provider.changeTime(time);
@@ -301,13 +303,13 @@ class CreateEvent extends StatelessWidget {
                           showDialog(
                               context: context,
                               builder: (context) {
-                                return Center(
+                                return const Center(
                                   child: CircularProgressIndicator(
                                     color: MyThemeData.primarycolorlight,
                                   ),
                                 );
                               });
-                          await Future.delayed(Duration(seconds: 2));
+                          await Future.delayed(const Duration(seconds: 2));
                           String formattedTime =
                               "${provider.selectedTime.hour}:${provider.selectedTime.minute}";
                           FirebaseManager.addEvent(EventModel(
@@ -317,7 +319,8 @@ class CreateEvent extends StatelessWidget {
                               date:
                                   provider.selectedDate.millisecondsSinceEpoch,
                               time: formattedTime,
-                              description: descriptionController.text));
+                              description: descriptionController.text,
+                              userId: FirebaseAuth.instance.currentUser!.uid));
                           Navigator.pop(context);
                           Navigator.pop(context);
                         },

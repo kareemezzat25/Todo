@@ -5,15 +5,38 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_app/firebase/firebase_manager.dart';
 import 'package:todo_app/models/eventmodel.dart';
+import 'package:todo_app/models/theme.dart';
 import 'package:todo_app/providers/theme_provider.dart';
+import 'package:todo_app/providers/userprovider.dart';
 import 'package:todo_app/widgets/taskitem.dart';
 
-class HomeTab extends StatelessWidget {
-  const HomeTab({super.key});
+class HomeTab extends StatefulWidget {
+  HomeTab({super.key});
+
+  @override
+  State<HomeTab> createState() => _HomeTabState();
+}
+
+class _HomeTabState extends State<HomeTab> {
+  List<String> eventCategories = [
+    "All",
+    "sports",
+    "birthday",
+    "BookClub",
+    "eating",
+    "exhibition",
+    "gaming",
+    "holiday",
+    "meeting",
+    "workshop"
+  ];
+
+  int selectedIndex = 0;
 
   @override
   Widget build(BuildContext context) {
     var provider = Provider.of<ThemeProvider>(context);
+    var userprovider = Provider.of<UserProvider>(context);
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: 80.h,
@@ -33,7 +56,7 @@ class HomeTab extends StatelessWidget {
               Text("welcome_back".tr(),
                   style: Theme.of(context).textTheme.bodySmall),
               Text(
-                "Kareem elfeky",
+                userprovider.userModel?.userName ?? "",
                 style: Theme.of(context).textTheme.bodyLarge,
               )
             ],
@@ -97,18 +120,62 @@ class HomeTab extends StatelessWidget {
                 ],
               ),
               SizedBox(
-                height: 8.h,
+                height: 12.h,
               ),
-              Container(
-                height: 60.h,
-                color: Colors.white,
+              SizedBox(
+                height: 50.h,
+                child: ListView.separated(
+                    scrollDirection: Axis.horizontal,
+                    itemBuilder: (context, index) {
+                      return InkWell(
+                        onTap: () {
+                          selectedIndex = index;
+                          setState(() {});
+                        },
+                        child: Container(
+                          padding: EdgeInsets.symmetric(
+                              vertical: 10.h, horizontal: 10.w),
+                          alignment: Alignment.center,
+                          decoration: BoxDecoration(
+                              color: selectedIndex == index
+                                  ? provider.themeMode == ThemeMode.dark
+                                      ? MyThemeData.primarycolorlight
+                                      : MyThemeData.secondaryColorLightdark
+                                  : null,
+                              borderRadius: BorderRadius.circular(46.r),
+                              border: Border.all(
+                                  color: provider.themeMode == ThemeMode.dark
+                                      ? MyThemeData.primarycolorlight
+                                      : MyThemeData.secondaryColorLightdark)),
+                          child: Text(
+                            eventCategories[index],
+                            style: Theme.of(context)
+                                .textTheme
+                                .titleMedium!
+                                .copyWith(
+                                    color: provider.themeMode == ThemeMode.dark
+                                        ? MyThemeData.secondaryColorLightdark
+                                        : selectedIndex == index
+                                            ? MyThemeData.primarycolorlight
+                                            : MyThemeData
+                                                .secondaryColorLightdark),
+                          ),
+                        ),
+                      );
+                    },
+                    separatorBuilder: (context, index) {
+                      return SizedBox(
+                        width: 10.w,
+                      );
+                    },
+                    itemCount: eventCategories.length),
               )
             ],
           ),
         ),
       ),
       body: StreamBuilder<QuerySnapshot<EventModel>>(
-        stream: FirebaseManager.getEvents(),
+        stream: FirebaseManager.getEvents(eventCategories[selectedIndex]),
         builder: (context, snapshot) {
           return Padding(
             padding: EdgeInsets.symmetric(vertical: 16.h, horizontal: 16.w),

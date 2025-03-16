@@ -8,6 +8,7 @@ import 'package:todo_app/firebase/firebase_manager.dart';
 import 'dart:ui' as ui; // Import dart:ui explicitly
 import 'package:todo_app/models/theme.dart';
 import 'package:todo_app/providers/theme_provider.dart';
+import 'package:todo_app/providers/userprovider.dart';
 import 'package:todo_app/views/forgetPassword.dart';
 import 'package:todo_app/views/homeview.dart';
 import 'package:todo_app/views/signup.dart';
@@ -24,6 +25,7 @@ class LoginView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var provider = Provider.of<ThemeProvider>(context);
+    var userprovider = Provider.of<UserProvider>(context);
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -162,6 +164,7 @@ class LoginView extends StatelessWidget {
                               emailController.text, passwordController.text,
                               () {
                             Navigator.pop(context);
+                            userprovider.initUser();
                             Navigator.pushNamedAndRemoveUntil(
                                 context, HomeView.routeName, (route) => false);
                           }, (message) {

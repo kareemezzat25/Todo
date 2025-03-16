@@ -6,6 +6,7 @@ import 'package:todo_app/firebase_options.dart';
 import 'package:todo_app/models/cache.dart';
 import 'package:todo_app/models/theme.dart';
 import 'package:todo_app/providers/theme_provider.dart';
+import 'package:todo_app/providers/userprovider.dart';
 import 'package:todo_app/views/create_event.dart';
 import 'package:todo_app/views/forgetPassword.dart';
 import 'package:todo_app/views/homeview.dart';
@@ -23,8 +24,11 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
-  runApp(ChangeNotifierProvider(
-    create: (context) => ThemeProvider(),
+  runApp(MultiProvider(
+    providers: [
+      ChangeNotifierProvider(create: (context) => ThemeProvider()),
+      ChangeNotifierProvider(create: (context) => UserProvider())
+    ],
     child: EasyLocalization(
       supportedLocales: [Locale('en'), Locale('ar')],
       path: "assets/translations",
@@ -40,6 +44,7 @@ class TodoApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var provider = Provider.of<ThemeProvider>(context);
+    var userprovider = Provider.of<UserProvider>(context);
     return ScreenUtilInit(
       designSize:
           const Size(393, 841), // Set your base design size (e.g., iPhone X)
@@ -53,7 +58,9 @@ class TodoApp extends StatelessWidget {
           theme: MyThemeData.lightTheme,
           darkTheme: MyThemeData.darkTheme,
           themeMode: provider.themeMode,
-          initialRoute: IntroductionView.routeName,
+          initialRoute: userprovider.currentUser != null
+              ? HomeView.routeName
+              : IntroductionView.routeName,
           routes: {
             IntroductionView.routeName: (context) => const IntroductionView(),
             OnBoardingView.routeName: (context) => const OnBoardingView(),
