@@ -118,6 +118,10 @@ class FirebaseManager {
     return collection.doc(event.id).update(event.toJson());
   }
 
+  static Future<void> forgetPassword(String email) async {
+    await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
+  }
+
   static Future<void> logOut() async {
     await FirebaseAuth.instance.signOut();
   }
