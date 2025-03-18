@@ -173,12 +173,12 @@ class _ProfileTabState extends State<ProfileTab> {
             ElevatedButton(
                 onPressed: () {
                   FirebaseManager.logOut().then((_) async {
-                    Center(
+                    const Center(
                       child: CircularProgressIndicator(
                         color: MyThemeData.primarycolorlight,
                       ),
                     );
-                    await Future.delayed(Duration(seconds: 2));
+                    await Future.delayed(const Duration(seconds: 2));
                     Navigator.pushNamedAndRemoveUntil(
                         context, LoginView.routeName, (route) => false);
                   });

@@ -177,6 +177,7 @@ class _HomeTabState extends State<HomeTab> {
       body: StreamBuilder<QuerySnapshot<EventModel>>(
         stream: FirebaseManager.getEvents(eventCategories[selectedIndex]),
         builder: (context, snapshot) {
+          var length = snapshot.data?.docs.length ?? 0;
           if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(
               child: CircularProgressIndicator(
@@ -192,6 +193,14 @@ class _HomeTabState extends State<HomeTab> {
                     .textTheme
                     .titleMedium!
                     .copyWith(color: Colors.white),
+              ),
+            );
+          }
+          if (length == 0) {
+            return Center(
+              child: Text(
+                "There is No Task",
+                style: Theme.of(context).textTheme.titleMedium,
               ),
             );
           }

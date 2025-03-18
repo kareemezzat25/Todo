@@ -54,6 +54,15 @@ class FirebaseManager {
     }
   }
 
+  static Stream<QuerySnapshot<EventModel>> getFavouriteEvents() {
+    var collection = getEventCollection();
+    return collection
+        .orderBy("date")
+        .where("userId", isEqualTo: FirebaseAuth.instance.currentUser!.uid)
+        .where("isDone", isEqualTo: true)
+        .snapshots();
+  }
+
   static createUser(String email, String password, String userName,
       Function onSuccess, Function onError, Function onLoading) async {
     try {

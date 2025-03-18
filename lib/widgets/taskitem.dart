@@ -5,13 +5,19 @@ import 'package:todo_app/firebase/firebase_manager.dart';
 import 'package:todo_app/models/eventmodel.dart';
 import 'package:todo_app/models/theme.dart';
 
-class TaskItem extends StatelessWidget {
+class TaskItem extends StatefulWidget {
   EventModel event;
+
   TaskItem({super.key, required this.event});
 
   @override
+  State<TaskItem> createState() => _TaskItemState();
+}
+
+class _TaskItemState extends State<TaskItem> {
+  @override
   Widget build(BuildContext context) {
-    DateTime date = DateTime.fromMillisecondsSinceEpoch(event.date);
+    DateTime date = DateTime.fromMillisecondsSinceEpoch(widget.event.date);
 
     return Card(
       elevation: 3,
@@ -29,7 +35,7 @@ class TaskItem extends StatelessWidget {
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(12.r),
                   child: Image.asset(
-                    "assets/images/${event.category}.png",
+                    "assets/images/${widget.event.category}.png",
                     height: 203.h,
                     width: 360.w,
                     fit: BoxFit.cover,
@@ -49,7 +55,7 @@ class TaskItem extends StatelessWidget {
                   children: [
                     Expanded(
                       child: Text(
-                        event.title,
+                        widget.event.title,
                         style: Theme.of(context)
                             .textTheme
                             .titleSmall!
@@ -70,7 +76,7 @@ class TaskItem extends StatelessWidget {
                           padding: EdgeInsets.symmetric(horizontal: 8.w),
                           child: InkWell(
                             onTap: () {
-                              FirebaseManager.deleteEvent(event.id);
+                              FirebaseManager.deleteEvent(widget.event.id);
                             },
                             child: Icon(
                               Icons.delete,
@@ -78,9 +84,18 @@ class TaskItem extends StatelessWidget {
                             ),
                           ),
                         ),
-                        Icon(
-                          Icons.favorite,
-                          color: Theme.of(context).primaryColor,
+                        InkWell(
+                          onTap: () {
+                            widget.event.isDone = !widget.event.isDone;
+                            FirebaseManager.updateEvent(widget.event);
+                            setState(() {});
+                          },
+                          child: Icon(
+                            widget.event.isDone
+                                ? Icons.favorite
+                                : Icons.favorite_border,
+                            color: Theme.of(context).primaryColor,
+                          ),
                         )
                       ],
                     ),

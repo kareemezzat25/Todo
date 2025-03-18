@@ -18,7 +18,7 @@ class _HomeViewState extends State<HomeView> {
   List<Widget> tabs = [
     HomeTab(),
     const MapTab(),
-    const FavouriteTab(),
+    FavouriteTab(),
     const ProfileTab()
   ];
 
