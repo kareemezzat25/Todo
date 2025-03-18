@@ -67,7 +67,7 @@ class _HomeTabState extends State<HomeTab> {
             onPressed: () {
               provider.changeTheme();
             },
-            icon: Icon(Icons.sunny),
+            icon: const Icon(Icons.sunny),
             color: Colors.white,
           ),
           SizedBox(
@@ -177,6 +177,24 @@ class _HomeTabState extends State<HomeTab> {
       body: StreamBuilder<QuerySnapshot<EventModel>>(
         stream: FirebaseManager.getEvents(eventCategories[selectedIndex]),
         builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(
+              child: CircularProgressIndicator(
+                color: MyThemeData.primarycolorlight,
+              ),
+            );
+          }
+          if (snapshot.hasError) {
+            return Center(
+              child: Text(
+                "SomeThing Went Wrong",
+                style: Theme.of(context)
+                    .textTheme
+                    .titleMedium!
+                    .copyWith(color: Colors.white),
+              ),
+            );
+          }
           return Padding(
             padding: EdgeInsets.symmetric(vertical: 16.h, horizontal: 16.w),
             child: ListView.separated(

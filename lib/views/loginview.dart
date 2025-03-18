@@ -186,7 +186,7 @@ class LoginView extends StatelessWidget {
                                           style: ElevatedButton.styleFrom(
                                               backgroundColor: MyThemeData
                                                   .primarycolorlight),
-                                          child: Text(
+                                          child: const Text(
                                             "OK",
                                             style:
                                                 TextStyle(color: Colors.white),
@@ -197,12 +197,12 @@ class LoginView extends StatelessWidget {
                           }, () async {
                             showDialog(
                                 context: context,
-                                builder: (context) => Center(
+                                builder: (context) => const Center(
                                       child: CircularProgressIndicator(
                                         color: MyThemeData.primarycolorlight,
                                       ),
                                     ));
-                            await Future.delayed(Duration(seconds: 2));
+                            await Future.delayed(const Duration(seconds: 2));
                           });
                         }
                       },
@@ -291,7 +291,7 @@ class LoginView extends StatelessWidget {
                         borderRadius: BorderRadius.circular(16.r),
                         color: provider.themeMode == ThemeMode.dark
                             ? Colors.transparent
-                            : Color(0xFFF2FEFF)),
+                            : const Color(0xFFF2FEFF)),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [

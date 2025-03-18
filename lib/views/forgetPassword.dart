@@ -78,9 +78,17 @@ class ForgetPasswordView extends StatelessWidget {
                     height: 24.h,
                   ),
                   ElevatedButton(
-                    onPressed: () {
+                    onPressed: () async {
                       if (formKey.currentState!.validate()) {
                         FirebaseManager.forgetPassword(emailController.text);
+                        showDialog(
+                            context: context,
+                            builder: (context) => const Center(
+                                  child: CircularProgressIndicator(
+                                    color: MyThemeData.primarycolorlight,
+                                  ),
+                                ));
+                        await Future.delayed(const Duration(seconds: 1));
                         showDialog(
                             context: context,
                             builder: (context) {
@@ -90,11 +98,12 @@ class ForgetPasswordView extends StatelessWidget {
                                   style:
                                       Theme.of(context).textTheme.titleMedium,
                                 ),
-                                content: Text(
+                                content: const Text(
                                     "You should open your mail and changePassword"),
                                 actions: [
                                   ElevatedButton(
                                       onPressed: () {
+                                        Navigator.pop(context);
                                         Navigator.pop(context);
                                       },
                                       style: ElevatedButton.styleFrom(
@@ -103,7 +112,7 @@ class ForgetPasswordView extends StatelessWidget {
                                                   BorderRadius.circular(16.r)),
                                           backgroundColor:
                                               MyThemeData.primarycolorlight),
-                                      child: Text(
+                                      child: const Text(
                                         "Ok",
                                         style: TextStyle(color: Colors.white),
                                       ))
