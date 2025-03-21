@@ -15,17 +15,13 @@ class HomeView extends StatefulWidget {
 }
 
 class _HomeViewState extends State<HomeView> {
-  List<Widget> tabs = [
-    HomeTab(),
-    const MapTab(),
-    FavouriteTab(),
-    const ProfileTab()
-  ];
+  List<Widget> tabs = [HomeTab(), MapTab(), FavouriteTab(), const ProfileTab()];
 
   int selectedIndex = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        resizeToAvoidBottomInset: false,
         body: tabs[selectedIndex],
         floatingActionButton: FloatingActionButton(
           onPressed: () {

@@ -5,36 +5,53 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import 'package:todo_app/views/tabs/map/location_service.dart';
 
-class MapTab extends StatelessWidget {
-  const MapTab({super.key});
+class MapTab extends StatefulWidget {
+  MapTab({super.key});
+
+  @override
+  State<MapTab> createState() => _MapTabState();
+}
+
+class _MapTabState extends State<MapTab> {
+  late GoogleMapController mapController;
+
+  CameraPosition cameraPosition = CameraPosition(
+      zoom: 16, target: LatLng(37.43296265331129, -122.08832357078792));
+
+  late Set<Marker> markers = {
+    Marker(markerId: MarkerId("1"), position: cameraPosition.target)
+  };
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         floatingActionButton: FloatingActionButton(
-            onPressed: () async {
-              Position currentLocation =
-                  await LocationService.determinePosition();
-
-              List<Placemark> placemarks = await placemarkFromCoordinates(
-                  currentLocation.latitude, currentLocation.longitude);
-              if (placemarks.isNotEmpty) {
-                print(currentLocation.latitude);
-                print(currentLocation.longitude);
-                print(placemarks[0].country);
-                print(placemarks[0].postalCode);
-                // 29.953551
-                // 31.2138882
-              }
+            onPressed: () {
+              updateLocation();
             },
             child: Icon(
               Icons.pin_drop,
-              color: Colors.blue,
+              color: Colors.white,
             )),
         body: GoogleMap(
-            key: UniqueKey(),
+            onMapCreated: (GoogleMapController controller) {
+              mapController = controller;
+            },
+            markers: markers,
             mapType: MapType.normal,
-            initialCameraPosition: CameraPosition(
-                zoom: 16, target: LatLng(29.953551, 31.2138882))));
+            initialCameraPosition: cameraPosition));
+  }
+
+  void updateLocation() {
+    Stream<Position> location = Geolocator.getPositionStream(
+        locationSettings: LocationSettings(
+            accuracy: LocationAccuracy.best, distanceFilter: 100));
+    location.listen((Position currentPosition) {
+      LatLng place =
+          LatLng(currentPosition.latitude, currentPosition.longitude);
+      mapController.animateCamera(CameraUpdate.newLatLngZoom(place, 18));
+      markers.add(Marker(markerId: MarkerId("1"), position: place));
+      setState(() {});
+    });
   }
 }

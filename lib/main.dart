@@ -17,6 +17,7 @@ import 'package:todo_app/views/loginview.dart';
 import 'package:todo_app/views/onBoardingview.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:todo_app/views/signup.dart';
+import 'package:todo_app/views/splashview.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -68,10 +69,9 @@ class TodoApp extends StatelessWidget {
           theme: MyThemeData.lightTheme,
           darkTheme: MyThemeData.darkTheme,
           themeMode: provider.themeMode,
-          initialRoute: userprovider.currentUser != null
-              ? HomeView.routeName
-              : IntroductionView.routeName,
+          initialRoute: SplashView.routeName,
           routes: {
+            SplashView.routeName: (context) => SplashView(),
             IntroductionView.routeName: (context) => const IntroductionView(),
             OnBoardingView.routeName: (context) => const OnBoardingView(),
             LoginView.routeName: (context) => LoginView(),

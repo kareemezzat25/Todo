@@ -55,13 +55,23 @@ class FirebaseManager {
     }
   }
 
-  static Stream<QuerySnapshot<EventModel>> getFavouriteEvents() {
+  static Stream<QuerySnapshot<EventModel>> getFavouriteEvents(String title) {
     var collection = getEventCollection();
-    return collection
-        .orderBy("date")
-        .where("userId", isEqualTo: FirebaseAuth.instance.currentUser!.uid)
-        .where("isDone", isEqualTo: true)
-        .snapshots();
+    if (title == null || title.isEmpty) {
+      return collection
+          .orderBy("date")
+          .where("userId", isEqualTo: FirebaseAuth.instance.currentUser!.uid)
+          .where("isDone", isEqualTo: true)
+          .snapshots();
+    } else {
+      return collection
+          .orderBy("date")
+          .where("userId", isEqualTo: FirebaseAuth.instance.currentUser!.uid)
+          .where("isDone", isEqualTo: true)
+          .where("title", isGreaterThanOrEqualTo: title)
+          .where("title", isLessThan: title + '\uf8ff')
+          .snapshots();
+    }
   }
 
   static createUser(String email, String password, String userName,

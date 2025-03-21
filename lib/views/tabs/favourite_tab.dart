@@ -6,9 +6,26 @@ import 'package:todo_app/models/eventmodel.dart';
 import 'package:todo_app/models/theme.dart';
 import 'package:todo_app/widgets/taskitem.dart';
 
-class FavouriteTab extends StatelessWidget {
-  var searchController = TextEditingController();
+class FavouriteTab extends StatefulWidget {
   FavouriteTab({super.key});
+
+  @override
+  State<FavouriteTab> createState() => _FavouriteTabState();
+}
+
+class _FavouriteTabState extends State<FavouriteTab> {
+  var searchController = TextEditingController();
+  var searchQuery = "";
+
+  @override
+  void initState() {
+    super.initState();
+    searchController.addListener(() {
+      setState(() {
+        searchQuery = searchController.text;
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +68,7 @@ class FavouriteTab extends StatelessWidget {
               height: 16.h,
             ),
             StreamBuilder<QuerySnapshot<EventModel>>(
-                stream: FirebaseManager.getFavouriteEvents(),
+                stream: FirebaseManager.getFavouriteEvents(searchQuery),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return const Center(
