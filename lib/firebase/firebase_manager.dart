@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:todo_app/models/eventmodel.dart';
 import 'package:todo_app/models/usermodel.dart';
 
@@ -108,6 +109,31 @@ class FirebaseManager {
     } on FirebaseAuthException catch (e) {
       onError("Email or password is not valid");
     }
+  }
+
+  static Future<UserCredential> signInWithGoogle() async {
+    // Step 1: Sign out to ensure account selection
+    GoogleSignIn googleSignIn = GoogleSignIn();
+    await googleSignIn.signOut(); // This ensures the account picker shows up
+
+    // Step 2: Initiate sign-in process
+    final GoogleSignInAccount? googleUser = await googleSignIn.signIn();
+
+    if (googleUser == null) {
+      throw Exception("Google Sign-In canceled");
+    }
+
+    // Step 3: Get authentication credentials
+    final GoogleSignInAuthentication googleAuth =
+        await googleUser.authentication;
+
+    final OAuthCredential credential = GoogleAuthProvider.credential(
+      accessToken: googleAuth.accessToken,
+      idToken: googleAuth.idToken,
+    );
+
+    // Step 4: Sign in to Firebase with Google credentials
+    return await FirebaseAuth.instance.signInWithCredential(credential);
   }
 
   static Future<UserModel?> readUserData(String id) async {

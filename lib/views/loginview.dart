@@ -1,4 +1,5 @@
 import 'package:easy_localization/easy_localization.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -7,6 +8,7 @@ import 'package:provider/provider.dart';
 import 'package:todo_app/firebase/firebase_manager.dart';
 import 'dart:ui' as ui; // Import dart:ui explicitly
 import 'package:todo_app/models/theme.dart';
+import 'package:todo_app/models/usermodel.dart';
 import 'package:todo_app/providers/theme_provider.dart';
 import 'package:todo_app/providers/userprovider.dart';
 import 'package:todo_app/views/forgetPassword.dart';
@@ -282,33 +284,102 @@ class LoginView extends StatelessWidget {
                   SizedBox(
                     height: 24.h,
                   ),
-                  Container(
-                    width: 361.w,
-                    height: 58.h,
-                    padding: const EdgeInsets.symmetric(vertical: 8),
-                    decoration: BoxDecoration(
-                        border: Border.all(color: const Color(0xFF5669FF)),
-                        borderRadius: BorderRadius.circular(16.r),
-                        color: provider.themeMode == ThemeMode.dark
-                            ? Colors.transparent
-                            : const Color(0xFFF2FEFF)),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Image.asset(
-                          "assets/images/google_logo.png",
-                          width: 45,
-                          height: 45,
-                          fit: BoxFit.contain,
-                        ),
-                        Text(
-                          "login_with_google".tr(),
-                          style: Theme.of(context)
-                              .textTheme
-                              .titleLarge!
-                              .copyWith(fontWeight: FontWeight.w500),
-                        )
-                      ],
+                  InkWell(
+                    onTap: () async {
+                      try {
+                        final UserCredential userCredential =
+                            await FirebaseManager.signInWithGoogle();
+                        final User? user = userCredential.user;
+                        UserModel? userExist =
+                            await FirebaseManager.readUserData(user!.uid);
+                        if (user == null) {
+                          throw Exception("user-Signin failed");
+                        }
+                        if (user != null && userExist?.id == null) {
+                          UserModel userModel = UserModel(
+                              id: user.uid,
+                              userName: user.displayName,
+                              email: user.email,
+                              createdAt: DateTime.now().millisecondsSinceEpoch);
+
+                          FirebaseManager.addUser(userModel);
+                        }
+                        showDialog(
+                            context: context,
+                            builder: (context) {
+                              return const Center(
+                                child: CircularProgressIndicator(
+                                  color: MyThemeData.primarycolorlight,
+                                ),
+                              );
+                            });
+                        await Future.delayed(const Duration(seconds: 2));
+
+                        userprovider.initUser();
+                        Navigator.pushNamedAndRemoveUntil(
+                            context, HomeView.routeName, (route) => false);
+                      } catch (e) {
+                        showDialog(
+                            context: context,
+                            builder: (context) {
+                              return AlertDialog(
+                                title: Text(
+                                  "SomeThing is went Wrong",
+                                  style:
+                                      Theme.of(context).textTheme.titleMedium,
+                                ),
+                                content: Text("$e"),
+                                actions: [
+                                  ElevatedButton(
+                                      onPressed: () {
+                                        Navigator.pop(context);
+                                      },
+                                      style: ElevatedButton.styleFrom(
+                                          backgroundColor:
+                                              MyThemeData.primarycolorlight,
+                                          shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(16.r))),
+                                      child: Text(
+                                        "Ok",
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodySmall!
+                                            .copyWith(color: Colors.white),
+                                      ))
+                                ],
+                              );
+                            });
+                      }
+                    },
+                    child: Container(
+                      width: 361.w,
+                      height: 58.h,
+                      padding: const EdgeInsets.symmetric(vertical: 8),
+                      decoration: BoxDecoration(
+                          border: Border.all(color: const Color(0xFF5669FF)),
+                          borderRadius: BorderRadius.circular(16.r),
+                          color: provider.themeMode == ThemeMode.dark
+                              ? Colors.transparent
+                              : const Color(0xFFF2FEFF)),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Image.asset(
+                            "assets/images/google_logo.png",
+                            width: 45,
+                            height: 45,
+                            fit: BoxFit.contain,
+                          ),
+                          Text(
+                            "login_with_google".tr(),
+                            style: Theme.of(context)
+                                .textTheme
+                                .titleLarge!
+                                .copyWith(fontWeight: FontWeight.w500),
+                          )
+                        ],
+                      ),
                     ),
                   ),
                   SizedBox(

@@ -40,9 +40,9 @@ void main() async {
       ChangeNotifierProvider(create: (context) => UserProvider())
     ],
     child: EasyLocalization(
-      supportedLocales: [Locale('en'), Locale('ar')],
+      supportedLocales: const [Locale('en'), Locale('ar')],
       path: "assets/translations",
-      fallbackLocale: Locale('en'),
+      fallbackLocale: const Locale('en'),
       child: const TodoApp(),
     ),
   ));
