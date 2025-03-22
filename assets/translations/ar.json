@@ -29,5 +29,19 @@
     "english": "الإنجليزية",
     "light": "فاتح",
     "dark": "داكن",
-    "welcome_back":"مرحبا بعودتك"
+    "welcome_back":"مرحبا بعودتك",
+    "task_page_title": "إنشاء مهمة",
+    "task_title": "العنوان",
+    "task_title_label": "عنوان المهمة",
+    "task_description": "الوصف",
+    "task_description_label": "وصف المهمة",
+    "task_date": "تاريخ المهمة",
+    "task_time": "وقت المهمة",
+    "task_location": "الموقع",
+    "choose_location": "اختر موقع المهمة",
+    "add_task": "إضافة مهمة",
+    "search_for_event": "ابحث عن حدث",
+    "message_went_wrong": "حدث خطأ ما",
+    "no_task_favourite": "لا توجد مهام مفضلة",
+    "task_details": "تفاصيل المهمة"
 }

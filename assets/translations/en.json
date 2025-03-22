@@ -29,6 +29,20 @@
     "english":"English",
     "light":"Light",
     "dark":"Dark",
-    "welcome_back":"Welcome Back"
+    "welcome_back":"Welcome Back",
+    "task_page_title":"Create Task",
+    "task_title":"Title",
+    "task_title_label":"Task Title",
+    "task_description":"Description",
+    "task_description_label":"Task Description",
+    "task_date":"Task Date",
+    "task_time":"Task Time",
+    "task_location":"Location",
+    "choose_location":"Choose Task Location",
+    "add_task":"Add Task",
+    "search_for_event":"Search for Event",
+    "message_went_wrong":"SomeThing Went Wrong",
+    "no_task_favourite":"There Is No Task In Favourite",
+    "task_details":"Task Details"
 
 }

@@ -1,19 +1,22 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:geocoding/geocoding.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_app/firebase/firebase_manager.dart';
 import 'package:todo_app/models/eventmodel.dart';
 import 'package:todo_app/models/theme.dart';
 import 'package:todo_app/providers/create_event_provider.dart';
 import 'package:todo_app/providers/theme_provider.dart';
+import 'package:todo_app/views/tabs/map/map_tab.dart';
 
 class CreateEvent extends StatelessWidget {
   static const String routeName = "createEvent";
   static const Color color = Color(0xFF1C1C1C);
   TextEditingController titleController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
+  Placemark? locationSelected;
   CreateEvent({super.key});
 
   @override
@@ -25,7 +28,7 @@ class CreateEvent extends StatelessWidget {
         var themeProvider = Provider.of<ThemeProvider>(context);
         return Scaffold(
             appBar: AppBar(
-              title: const Text("Create Event"),
+              title: Text("task_page_title".tr()),
             ),
             body: Padding(
               padding: EdgeInsets.symmetric(horizontal: 16.w),
@@ -87,7 +90,7 @@ class CreateEvent extends StatelessWidget {
                     SizedBox(
                       height: 16.h,
                     ),
-                    Text("Title",
+                    Text("task_title".tr(),
                         style: Theme.of(context)
                             .textTheme
                             .titleMedium!
@@ -108,7 +111,7 @@ class CreateEvent extends StatelessWidget {
                                 ? MyThemeData.secondaryColorDark
                                 : Theme.of(context).focusColor,
                           ),
-                          labelText: "Event Title",
+                          labelText: "task_title_label".tr(),
                           labelStyle: Theme.of(context)
                               .textTheme
                               .titleMedium!
@@ -134,7 +137,7 @@ class CreateEvent extends StatelessWidget {
                       height: 16.h,
                     ),
                     Text(
-                      "Description",
+                      "task_description".tr(),
                       style: Theme.of(context).textTheme.titleMedium!.copyWith(
                           color: themeProvider.themeMode == ThemeMode.dark
                               ? MyThemeData.secondaryColorDark
@@ -148,7 +151,7 @@ class CreateEvent extends StatelessWidget {
                       controller: descriptionController,
                       style: Theme.of(context).textTheme.titleMedium,
                       decoration: InputDecoration(
-                          labelText: "Event Description",
+                          labelText: "task_description_label".tr(),
                           labelStyle: Theme.of(context)
                               .textTheme
                               .titleMedium!
@@ -185,7 +188,7 @@ class CreateEvent extends StatelessWidget {
                           width: 12.w,
                         ),
                         Text(
-                          "Event Date",
+                          "task_date".tr(),
                           style: Theme.of(context)
                               .textTheme
                               .titleMedium!
@@ -230,7 +233,7 @@ class CreateEvent extends StatelessWidget {
                           width: 12.w,
                         ),
                         Text(
-                          "Event Time",
+                          "task_time".tr(),
                           style: Theme.of(context)
                               .textTheme
                               .titleMedium!
@@ -263,7 +266,7 @@ class CreateEvent extends StatelessWidget {
                       height: 16.h,
                     ),
                     Text(
-                      "Location",
+                      "task_location".tr(),
                       style: Theme.of(context).textTheme.titleMedium!.copyWith(
                           color: themeProvider.themeMode == ThemeMode.dark
                               ? MyThemeData.secondaryColorDark
@@ -272,27 +275,40 @@ class CreateEvent extends StatelessWidget {
                     SizedBox(
                       height: 8.h,
                     ),
-                    ListTile(
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(16.r),
-                          side: const BorderSide(
-                              color: MyThemeData.primarycolorlight)),
-                      leading: Container(
-                        width: 46.w,
-                        height: 46.h,
-                        child: const Icon(Icons.pin_drop, color: Colors.white),
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(8.r),
-                            color: MyThemeData.primarycolorlight),
-                      ),
-                      title: Text(
-                        "Choose Event Location",
-                        style: Theme.of(context).textTheme.titleMedium,
-                      ),
-                      trailing: const Icon(
-                        Icons.arrow_forward_ios,
-                        size: 24,
-                        color: MyThemeData.primarycolorlight,
+                    InkWell(
+                      onTap: () async {
+                        /* Placemark? selectedLocation = await Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => MapTab()));
+                        locationSelected = selectedLocation;*/
+                      },
+                      child: ListTile(
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(16.r),
+                            side: const BorderSide(
+                                color: MyThemeData.primarycolorlight)),
+                        leading: Container(
+                          width: 46.w,
+                          height: 46.h,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(8.r),
+                              color: MyThemeData.primarycolorlight),
+                          child:
+                              const Icon(Icons.pin_drop, color: Colors.white),
+                        ),
+                        title: Text(
+                          "choose_location".tr()
+                          /* locationSelected == null
+                              ? "choose_location".tr()
+                              : locationSelected!.country ?? "unknown"*/
+                          ,
+                          style: Theme.of(context).textTheme.titleMedium,
+                        ),
+                        trailing: const Icon(
+                          Icons.arrow_forward_ios,
+                          size: 24,
+                          color: MyThemeData.primarycolorlight,
+                        ),
                       ),
                     ),
                     SizedBox(
@@ -330,7 +346,7 @@ class CreateEvent extends StatelessWidget {
                                 borderRadius: BorderRadius.circular(16.r)),
                             backgroundColor: MyThemeData.primarycolorlight),
                         child: Text(
-                          "Add Event",
+                          "add_task".tr(),
                           style: Theme.of(context)
                               .textTheme
                               .titleMedium!

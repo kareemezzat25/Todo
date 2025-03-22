@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:todo_app/firebase/firebase_manager.dart';
@@ -50,7 +51,7 @@ class _FavouriteTabState extends State<FavouriteTab> {
                       .textTheme
                       .titleLarge!
                       .copyWith(fontSize: 14),
-                  labelText: "Search for Event",
+                  labelText: "search_for_event".tr(),
                   border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(16.r),
                       borderSide:
@@ -80,7 +81,7 @@ class _FavouriteTabState extends State<FavouriteTab> {
                   if (snapshot.hasError) {
                     return Text(
                       textAlign: TextAlign.center,
-                      "SomeThing Went Wrong",
+                      "message_went_wrong".tr(),
                       style: Theme.of(context).textTheme.titleMedium,
                     );
                   }
@@ -88,7 +89,7 @@ class _FavouriteTabState extends State<FavouriteTab> {
                   if (length == 0) {
                     return Text(
                       textAlign: TextAlign.center,
-                      "There is No Task in Favourite",
+                      "no_task_favourite".tr(),
                       style: Theme.of(context).textTheme.titleMedium,
                     );
                   }

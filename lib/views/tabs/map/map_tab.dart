@@ -15,25 +15,41 @@ class MapTab extends StatefulWidget {
 class _MapTabState extends State<MapTab> {
   late GoogleMapController mapController;
 
-  CameraPosition cameraPosition = CameraPosition(
+  CameraPosition cameraPosition = const CameraPosition(
       zoom: 16, target: LatLng(37.43296265331129, -122.08832357078792));
 
   late Set<Marker> markers = {
-    Marker(markerId: MarkerId("1"), position: cameraPosition.target)
+    Marker(markerId: const MarkerId("1"), position: cameraPosition.target)
   };
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         floatingActionButton: FloatingActionButton(
+            heroTag: "map_tab",
             onPressed: () {
               updateLocation();
             },
-            child: Icon(
+            child: const Icon(
               Icons.pin_drop,
               color: Colors.white,
             )),
         body: GoogleMap(
+            onTap: (LatLng place) async {
+              List<Placemark> places = await placemarkFromCoordinates(
+                  place.latitude, place.longitude);
+              if (places.isNotEmpty) {
+                mapController
+                    .animateCamera(CameraUpdate.newLatLngZoom(place, 16));
+
+                setState(() {
+                  markers.clear();
+                  markers.add(Marker(markerId: MarkerId("1"), position: place));
+                });
+
+                // Navigator.pop(context, places[0]);
+              }
+            },
             onMapCreated: (GoogleMapController controller) {
               mapController = controller;
             },
@@ -43,15 +59,16 @@ class _MapTabState extends State<MapTab> {
   }
 
   void updateLocation() {
-    Stream<Position> location = Geolocator.getPositionStream(
-        locationSettings: LocationSettings(
-            accuracy: LocationAccuracy.best, distanceFilter: 100));
-    location.listen((Position currentPosition) {
-      LatLng place =
-          LatLng(currentPosition.latitude, currentPosition.longitude);
-      mapController.animateCamera(CameraUpdate.newLatLngZoom(place, 18));
-      markers.add(Marker(markerId: MarkerId("1"), position: place));
-      setState(() {});
+    Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high)
+        .then((Position position) {
+      LatLng currentLocation = LatLng(position.latitude, position.longitude);
+      mapController
+          .animateCamera(CameraUpdate.newLatLngZoom(currentLocation, 18));
+
+      setState(() {
+        markers.clear();
+        markers.add(Marker(markerId: MarkerId("1"), position: currentLocation));
+      });
     });
   }
 }
