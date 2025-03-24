@@ -260,7 +260,7 @@ class SignUpView extends StatelessWidget {
                                                             16.r)),
                                                 backgroundColor: MyThemeData
                                                     .primarycolorlight),
-                                            child: Text(
+                                            child: const Text(
                                               "OK",
                                               style: TextStyle(
                                                   color: Colors.white),
@@ -270,12 +270,12 @@ class SignUpView extends StatelessWidget {
                           }, () async {
                             showDialog(
                                 context: context,
-                                builder: (context) => Center(
+                                builder: (context) => const Center(
                                       child: CircularProgressIndicator(
                                         color: MyThemeData.primarycolorlight,
                                       ),
                                     ));
-                            await Future.delayed(Duration(seconds: 2));
+                            await Future.delayed(const Duration(seconds: 2));
                           });
                         }
                       },
@@ -343,9 +343,9 @@ class SignUpView extends StatelessWidget {
                       ],
                       onToggle: (index) {
                         if (index == 1) {
-                          context.setLocale(Locale("ar"));
+                          context.setLocale(const Locale("ar"));
                         } else {
-                          context.setLocale(Locale("en"));
+                          context.setLocale(const Locale("en"));
                         }
                       },
                     ),

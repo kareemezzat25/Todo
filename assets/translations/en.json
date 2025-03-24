@@ -36,13 +36,17 @@
     "task_description":"Description",
     "task_description_label":"Task Description",
     "task_date":"Task Date",
+    "choose_date":"Choose Date",
     "task_time":"Task Time",
+    "choose_time":"Choose Time",
+
     "task_location":"Location",
     "choose_location":"Choose Task Location",
     "add_task":"Add Task",
     "search_for_event":"Search for Event",
     "message_went_wrong":"SomeThing Went Wrong",
     "no_task_favourite":"There Is No Task In Favourite",
-    "task_details":"Task Details"
+    "task_details":"Task Details",
+    "edit_task":"Edit Task"
 
 }

@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:todo_app/firebase/firebase_manager.dart';
 import 'package:todo_app/models/eventmodel.dart';
 import 'package:todo_app/models/theme.dart';
+import 'package:todo_app/views/edit_task.dart';
 import 'package:todo_app/views/eventdetails.dart';
 
 class TaskItem extends StatefulWidget {
@@ -74,9 +75,15 @@ class _TaskItemState extends State<TaskItem> {
                         children: [
                           Padding(
                             padding: EdgeInsets.symmetric(horizontal: 8.w),
-                            child: Icon(
-                              Icons.edit,
-                              color: Theme.of(context).primaryColor,
+                            child: InkWell(
+                              onTap: () {
+                                Navigator.pushNamed(context, EditTask.routeName,
+                                    arguments: widget.event);
+                              },
+                              child: Icon(
+                                Icons.edit,
+                                color: Theme.of(context).primaryColor,
+                              ),
                             ),
                           ),
                           Padding(

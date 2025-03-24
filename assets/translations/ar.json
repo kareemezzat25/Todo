@@ -36,12 +36,18 @@
     "task_description": "الوصف",
     "task_description_label": "وصف المهمة",
     "task_date": "تاريخ المهمة",
+    "choose_date": "اختر التاريخ",
+
     "task_time": "وقت المهمة",
+    "choose_time": "اختر الوقت"
+,
     "task_location": "الموقع",
     "choose_location": "اختر موقع المهمة",
     "add_task": "إضافة مهمة",
     "search_for_event": "ابحث عن حدث",
     "message_went_wrong": "حدث خطأ ما",
     "no_task_favourite": "لا توجد مهام مفضلة",
-    "task_details": "تفاصيل المهمة"
+    "task_details": "تفاصيل المهمة",
+    "edit_task": "تعديل المهمة"
+
 }
