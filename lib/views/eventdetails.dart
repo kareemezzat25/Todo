@@ -6,15 +6,27 @@ import 'package:todo_app/firebase/firebase_manager.dart';
 import 'package:todo_app/models/eventmodel.dart';
 import 'package:todo_app/models/theme.dart';
 import 'package:todo_app/providers/theme_provider.dart';
+import 'package:todo_app/views/edit_task.dart';
 import 'package:todo_app/views/homeview.dart';
 
-class EventDetails extends StatelessWidget {
+class EventDetails extends StatefulWidget {
   static const String routeName = "EventDetails";
   const EventDetails({super.key});
 
   @override
+  State<EventDetails> createState() => _EventDetailsState();
+}
+
+class _EventDetailsState extends State<EventDetails> {
+  late EventModel event;
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    event = ModalRoute.of(context)?.settings.arguments as EventModel;
+  }
+
+  @override
   Widget build(BuildContext context) {
-    var event = ModalRoute.of(context)?.settings.arguments as EventModel;
     var themeProvider = Provider.of<ThemeProvider>(context);
     return Scaffold(
       appBar: AppBar(
@@ -24,9 +36,24 @@ class EventDetails extends StatelessWidget {
           style: Theme.of(context).textTheme.titleLarge,
         ),
         actions: [
-          const Icon(
-            Icons.edit,
-            color: MyThemeData.primarycolorlight,
+          InkWell(
+            onTap: () async {
+              final updatedEvent = await Navigator.pushNamed(
+                context,
+                EditTask.routeName,
+                arguments: event,
+              );
+
+              if (updatedEvent != null && updatedEvent is EventModel) {
+                event = updatedEvent;
+                print(event.description);
+                setState(() {});
+              }
+            },
+            child: const Icon(
+              Icons.edit,
+              color: MyThemeData.primarycolorlight,
+            ),
           ),
           SizedBox(
             width: 12.w,
@@ -110,7 +137,7 @@ class EventDetails extends StatelessWidget {
                           style: Theme.of(context).textTheme.titleMedium,
                         ),
                         Text(
-                          event.time,
+                          formatTime(event.time),
                           style: Theme.of(context)
                               .textTheme
                               .titleMedium!
@@ -188,5 +215,15 @@ class EventDetails extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  String formatTime(String time) {
+    List<String> parts = time.split(':');
+    if (parts.length == 2) {
+      String hours = parts[0].padLeft(2, '0');
+      String minutes = parts[1].padLeft(2, '0');
+      return "$hours:$minutes";
+    }
+    return time;
   }
 }

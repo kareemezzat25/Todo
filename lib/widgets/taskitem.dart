@@ -64,10 +64,11 @@ class _TaskItemState extends State<TaskItem> {
                       Expanded(
                         child: Text(
                           widget.event.title,
-                          style: Theme.of(context)
-                              .textTheme
-                              .titleSmall!
-                              .copyWith(fontWeight: FontWeight.w700),
+                          style:
+                              Theme.of(context).textTheme.titleSmall!.copyWith(
+                                    fontWeight: FontWeight.w700,
+                                  ),
+                          overflow: TextOverflow.ellipsis,
                         ),
                       ),
                       Row(

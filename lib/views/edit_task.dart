@@ -1,7 +1,9 @@
 import 'package:easy_localization/easy_localization.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
+import 'package:todo_app/firebase/firebase_manager.dart';
 import 'package:todo_app/models/eventmodel.dart';
 import 'package:todo_app/models/theme.dart';
 import 'package:todo_app/providers/create_event_provider.dart';
@@ -20,7 +22,7 @@ class EditTask extends StatelessWidget {
     titleController.text = taskItem.title;
     descriptionController.text = taskItem.description;
     return ChangeNotifierProvider(
-      create: (context) => CreateEventProvider(),
+      create: (context) => CreateEventProvider()..initEdit(taskItem),
       builder: (context, child) {
         var taskprovider = Provider.of<CreateEventProvider>(context);
         var themeProvider = Provider.of<ThemeProvider>(context);
@@ -28,7 +30,8 @@ class EditTask extends StatelessWidget {
           appBar: AppBar(
             title: Text("edit_task".tr()),
             titleTextStyle: Theme.of(context).textTheme.titleLarge,
-            iconTheme: IconThemeData(color: MyThemeData.primarycolorlight),
+            iconTheme:
+                const IconThemeData(color: MyThemeData.primarycolorlight),
           ),
           body: Padding(
             padding: EdgeInsets.symmetric(horizontal: 16.w),
@@ -48,31 +51,38 @@ class EditTask extends StatelessWidget {
                     child: ListView.separated(
                         scrollDirection: Axis.horizontal,
                         itemBuilder: (context, index) {
-                          return Container(
-                            alignment: Alignment.center,
-                            padding: EdgeInsets.symmetric(horizontal: 12.h),
-                            decoration: BoxDecoration(
-                                color: taskprovider.selectedIndex == index
-                                    ? MyThemeData.primarycolorlight
-                                    : Colors.transparent,
-                                borderRadius: BorderRadius.circular(37.r),
-                                border: Border.all(
-                                    color: MyThemeData.primarycolorlight)),
-                            child: Text(
-                              taskprovider.eventCategories[index],
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .titleMedium!
-                                  .copyWith(
-                                      color: themeProvider.themeMode ==
-                                              ThemeMode.dark
-                                          ? taskprovider.selectedIndex == index
-                                              ? MyThemeData.primaryColordark
-                                              : MyThemeData.primarycolorlight
-                                          : taskprovider.selectedIndex == index
-                                              ? MyThemeData
-                                                  .secondaryColorLightdark
-                                              : null),
+                          return InkWell(
+                            onTap: () {
+                              taskprovider.changeCategory(index);
+                            },
+                            child: Container(
+                              alignment: Alignment.center,
+                              padding: EdgeInsets.symmetric(horizontal: 12.h),
+                              decoration: BoxDecoration(
+                                  color: taskprovider.selectedIndex == index
+                                      ? MyThemeData.primarycolorlight
+                                      : Colors.transparent,
+                                  borderRadius: BorderRadius.circular(37.r),
+                                  border: Border.all(
+                                      color: MyThemeData.primarycolorlight)),
+                              child: Text(
+                                taskprovider.eventCategories[index],
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .titleMedium!
+                                    .copyWith(
+                                        color: themeProvider.themeMode ==
+                                                ThemeMode.dark
+                                            ? taskprovider.selectedIndex ==
+                                                    index
+                                                ? MyThemeData.primaryColordark
+                                                : MyThemeData.primarycolorlight
+                                            : taskprovider.selectedIndex ==
+                                                    index
+                                                ? MyThemeData
+                                                    .secondaryColorLightdark
+                                                : null),
+                              ),
                             ),
                           );
                         },
@@ -91,7 +101,7 @@ class EditTask extends StatelessWidget {
                     style: Theme.of(context).textTheme.titleMedium!.copyWith(
                         color: themeProvider.themeMode == ThemeMode.dark
                             ? MyThemeData.secondaryColorDark
-                            : Color(0xFF1C1C1C)),
+                            : const Color(0xFF1C1C1C)),
                   ),
                   SizedBox(
                     height: 8.h,
@@ -135,7 +145,7 @@ class EditTask extends StatelessWidget {
                     style: Theme.of(context).textTheme.titleMedium!.copyWith(
                         color: themeProvider.themeMode == ThemeMode.dark
                             ? MyThemeData.secondaryColorDark
-                            : Color(0xFF1C1C1C)),
+                            : const Color(0xFF1C1C1C)),
                   ),
                   SizedBox(
                     height: 8.h,
@@ -174,7 +184,7 @@ class EditTask extends StatelessWidget {
                         Icons.calendar_month_outlined,
                         color: themeProvider.themeMode == ThemeMode.dark
                             ? MyThemeData.secondaryColorDark
-                            : Color(0xFF1C1C1C),
+                            : const Color(0xFF1C1C1C),
                       ),
                       SizedBox(
                         width: 10.w,
@@ -187,24 +197,26 @@ class EditTask extends StatelessWidget {
                             .copyWith(
                                 color: themeProvider.themeMode == ThemeMode.dark
                                     ? MyThemeData.secondaryColorDark
-                                    : Color(0xFF1C1C1C)),
+                                    : const Color(0xFF1C1C1C)),
                       ),
-                      Spacer(),
+                      const Spacer(),
                       InkWell(
                           onTap: () async {
                             var selectedDate = await showDatePicker(
                                 context: context,
                                 initialDate: taskprovider.selectedDate,
                                 firstDate: DateTime.now()
-                                    .subtract(Duration(days: 365)),
-                                lastDate:
-                                    DateTime.now().add(Duration(days: 365)));
+                                    .subtract(const Duration(days: 365)),
+                                lastDate: DateTime.now()
+                                    .add(const Duration(days: 365)));
                             if (selectedDate != null) {
                               taskprovider.changeDate(selectedDate);
                             }
                           },
                           child: Text(
-                            "choose_date".tr(),
+                            taskprovider.selectedDate
+                                .toString()
+                                .substring(0, 10),
                             style: Theme.of(context).textTheme.titleMedium,
                           )),
                     ],
@@ -218,7 +230,7 @@ class EditTask extends StatelessWidget {
                         Icons.access_time,
                         color: themeProvider.themeMode == ThemeMode.dark
                             ? MyThemeData.secondaryColorDark
-                            : Color(0xFF1C1C1C),
+                            : const Color(0xFF1C1C1C),
                       ),
                       SizedBox(
                         width: 10.w,
@@ -231,13 +243,22 @@ class EditTask extends StatelessWidget {
                             .copyWith(
                                 color: themeProvider.themeMode == ThemeMode.dark
                                     ? MyThemeData.secondaryColorDark
-                                    : Color(0xFF1C1C1C)),
+                                    : const Color(0xFF1C1C1C)),
                       ),
                       const Spacer(),
                       InkWell(
-                          onTap: () {},
+                          onTap: () async {
+                            var time = await showTimePicker(
+                                context: context,
+                                initialTime: taskprovider.selectedTime);
+                            if (time != null) {
+                              taskprovider.changeTime(time);
+                            }
+                          },
                           child: Text(
-                            "choose_time".tr(),
+                            taskprovider.selectedTime
+                                .toString()
+                                .substring(10, 15),
                             style: Theme.of(context).textTheme.titleMedium,
                           ))
                     ],
@@ -250,7 +271,7 @@ class EditTask extends StatelessWidget {
                     style: Theme.of(context).textTheme.titleMedium!.copyWith(
                         color: themeProvider.themeMode == ThemeMode.dark
                             ? MyThemeData.secondaryColorDark
-                            : Color(0xFF1C1C1C)),
+                            : const Color(0xFF1C1C1C)),
                   ),
                   SizedBox(
                     height: 8.h,
@@ -286,7 +307,34 @@ class EditTask extends StatelessWidget {
                     height: 16.h,
                   ),
                   ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () async {
+                        String formattedTime =
+                            "${taskprovider.selectedTime.hour}:${taskprovider.selectedTime.minute}";
+                        String title = titleController.text;
+                        String description = descriptionController.text;
+                        EventModel task = EventModel(
+                            id: taskItem.id,
+                            title: title,
+                            category: taskprovider
+                                .eventCategories[taskprovider.selectedIndex],
+                            date: taskprovider
+                                .selectedDate.millisecondsSinceEpoch,
+                            description: description,
+                            time: formattedTime,
+                            userId: FirebaseAuth.instance.currentUser!.uid);
+
+                        FirebaseManager.updateEvent(task);
+                        showDialog(
+                            context: context,
+                            builder: (context) => const Center(
+                                  child: CircularProgressIndicator(
+                                    color: MyThemeData.primarycolorlight,
+                                  ),
+                                ));
+                        await Future.delayed(const Duration(seconds: 2));
+                        Navigator.pop(context);
+                        Navigator.pop(context);
+                      },
                       style: ElevatedButton.styleFrom(
                           minimumSize: Size(361.w, 56.h),
                           backgroundColor: MyThemeData.primarycolorlight,
