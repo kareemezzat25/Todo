@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -5,6 +6,8 @@ import 'package:provider/provider.dart';
 import 'package:todo_app/firebase/firebase_manager.dart';
 import 'package:todo_app/models/eventmodel.dart';
 import 'package:todo_app/models/theme.dart';
+import 'dart:ui' as ui; // Import dart:ui explicitly
+
 import 'package:todo_app/providers/theme_provider.dart';
 import 'package:todo_app/views/edit_task.dart';
 import 'package:todo_app/views/homeview.dart';
@@ -85,134 +88,167 @@ class _EventDetailsState extends State<EventDetails> {
           )
         ],
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16),
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              ClipRRect(
-                  borderRadius: BorderRadius.circular(16.r),
-                  child: Image.asset("assets/images/${event.category}.png")),
-              SizedBox(
-                height: 16.h,
+      body: StreamBuilder<QuerySnapshot<EventModel>>(
+        stream: FirebaseManager.getTaskWithId(event.id),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(
+              child: CircularProgressIndicator(
+                color: MyThemeData.primarycolorlight,
               ),
-              Text(
-                event.title,
+            );
+          }
+          if (snapshot.hasError) {
+            return Center(
+              child: Text(
+                "message_went_wrong".tr(),
                 style: Theme.of(context).textTheme.titleLarge,
               ),
-              SizedBox(
-                height: 16.h,
-              ),
-              Container(
-                padding: EdgeInsets.symmetric(horizontal: 8.w),
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(16.r),
-                    border: Border.all(color: MyThemeData.primarycolorlight)),
-                child: Row(
-                  children: [
-                    Container(
-                      margin: const EdgeInsets.all(8),
-                      padding: const EdgeInsets.all(12),
-                      alignment: Alignment.center,
-                      decoration: BoxDecoration(
-                          color: MyThemeData.primarycolorlight,
-                          borderRadius: BorderRadius.circular(8.r)),
-                      child: Icon(
-                        Icons.calendar_month_outlined,
-                        color: themeProvider.themeMode == ThemeMode.dark
-                            ? MyThemeData.primaryColordark
-                            : MyThemeData.secondaryColorLightdark,
-                      ),
-                    ),
-                    SizedBox(
-                      width: 8.w,
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+            );
+          }
+          if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
+            return Center(
+                child: Text(
+              "No Data Found",
+              style: Theme.of(context).textTheme.titleLarge,
+            ));
+          }
+          EventModel task = snapshot.data!.docs.first.data();
+          return Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  ClipRRect(
+                      borderRadius: BorderRadius.circular(16.r),
+                      child: Image.asset("assets/images/${task.category}.png")),
+                  SizedBox(
+                    height: 16.h,
+                  ),
+                  Text(
+                    task.title,
+                    style: Theme.of(context).textTheme.titleLarge,
+                  ),
+                  SizedBox(
+                    height: 16.h,
+                  ),
+                  Container(
+                    padding: EdgeInsets.symmetric(horizontal: 8.w),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(16.r),
+                        border:
+                            Border.all(color: MyThemeData.primarycolorlight)),
+                    child: Row(
                       children: [
-                        Text(
-                          DateFormat('d MMMM yyyy').format(
-                              DateTime.fromMillisecondsSinceEpoch(event.date)),
-                          style: Theme.of(context).textTheme.titleMedium,
+                        Container(
+                          margin: const EdgeInsets.all(8),
+                          padding: const EdgeInsets.all(12),
+                          alignment: Alignment.center,
+                          decoration: BoxDecoration(
+                              color: MyThemeData.primarycolorlight,
+                              borderRadius: BorderRadius.circular(8.r)),
+                          child: Icon(
+                            Icons.calendar_month_outlined,
+                            color: themeProvider.themeMode == ThemeMode.dark
+                                ? MyThemeData.primaryColordark
+                                : MyThemeData.secondaryColorLightdark,
+                          ),
                         ),
-                        Text(
-                          formatTime(event.time),
-                          style: Theme.of(context)
-                              .textTheme
-                              .titleMedium!
-                              .copyWith(
-                                  color:
-                                      themeProvider.themeMode == ThemeMode.dark
+                        SizedBox(
+                          width: 8.w,
+                        ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Directionality(
+                              textDirection: ui.TextDirection.ltr,
+                              child: Text(
+                                DateFormat('d MMMM yyyy').format(
+                                    DateTime.fromMillisecondsSinceEpoch(
+                                        task.date)),
+                                style: Theme.of(context).textTheme.titleMedium,
+                              ),
+                            ),
+                            Text(
+                              formatTime(task.time),
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .titleMedium!
+                                  .copyWith(
+                                      color: themeProvider.themeMode ==
+                                              ThemeMode.dark
                                           ? MyThemeData.secondaryColorLightdark
                                           : MyThemeData.primaryColordark),
+                            )
+                          ],
                         )
                       ],
-                    )
-                  ],
-                ),
-              ),
-              SizedBox(
-                height: 16.h,
-              ),
-              /* Container(
-                padding: EdgeInsets.symmetric(horizontal: 8.w),
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(16.r),
-                    border: Border.all(color: MyThemeData.primarycolorlight)),
-                child: Row(
-                  children: [
-                    Container(
-                      margin: const EdgeInsets.all(8),
-                      padding: const EdgeInsets.all(12),
-                      decoration: BoxDecoration(
-                          color: MyThemeData.primarycolorlight,
-                          borderRadius: BorderRadius.circular(8.r)),
-                      child: Icon(
-                        Icons.gps_fixed,
-                        color: themeProvider.themeMode == ThemeMode.dark
-                            ? MyThemeData.primaryColordark
-                            : MyThemeData.secondaryColorLightdark,
+                    ),
+                  ),
+                  SizedBox(
+                    height: 16.h,
+                  ),
+                  /* Container(
+                  padding: EdgeInsets.symmetric(horizontal: 8.w),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(16.r),
+                      border: Border.all(color: MyThemeData.primarycolorlight)),
+                  child: Row(
+                    children: [
+                      Container(
+                        margin: const EdgeInsets.all(8),
+                        padding: const EdgeInsets.all(12),
+                        decoration: BoxDecoration(
+                            color: MyThemeData.primarycolorlight,
+                            borderRadius: BorderRadius.circular(8.r)),
+                        child: Icon(
+                          Icons.gps_fixed,
+                          color: themeProvider.themeMode == ThemeMode.dark
+                              ? MyThemeData.primaryColordark
+                              : MyThemeData.secondaryColorLightdark,
+                        ),
                       ),
-                    ),
-                    Text(
-                      event.location,
-                      style: Theme.of(context).textTheme.titleMedium,
-                    ),
-                    const Spacer(),
-                    const Icon(
-                      Icons.arrow_forward_ios,
-                      color: MyThemeData.primarycolorlight,
-                    )
-                  ],
+                      Text(
+                        event.location,
+                        style: Theme.of(context).textTheme.titleMedium,
+                      ),
+                      const Spacer(),
+                      const Icon(
+                        Icons.arrow_forward_ios,
+                        color: MyThemeData.primarycolorlight,
+                      )
+                    ],
+                  ),
                 ),
+                SizedBox(
+                  height: 120.h,
+                ),
+                SizedBox(
+                  height: 16.h,
+                ),*/
+                  Text(
+                    "task_description".tr(),
+                    style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                        color: themeProvider.themeMode == ThemeMode.dark
+                            ? const Color(0xFFF4EBDC)
+                            : const Color(0xFF1C1C1C)),
+                  ),
+                  SizedBox(
+                    height: 8.h,
+                  ),
+                  Text(
+                    task.description,
+                    style: Theme.of(context).textTheme.titleMedium!.copyWith(
+                        color: themeProvider.themeMode == ThemeMode.dark
+                            ? const Color(0xFFF4EBDC)
+                            : const Color(0xFF1C1C1C)),
+                  )
+                ],
               ),
-              SizedBox(
-                height: 120.h,
-              ),
-              SizedBox(
-                height: 16.h,
-              ),*/
-              Text(
-                "task_description".tr(),
-                style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                    color: themeProvider.themeMode == ThemeMode.dark
-                        ? const Color(0xFFF4EBDC)
-                        : const Color(0xFF1C1C1C)),
-              ),
-              SizedBox(
-                height: 8.h,
-              ),
-              Text(
-                event.description,
-                style: Theme.of(context).textTheme.titleMedium!.copyWith(
-                    color: themeProvider.themeMode == ThemeMode.dark
-                        ? const Color(0xFFF4EBDC)
-                        : const Color(0xFF1C1C1C)),
-              )
-            ],
-          ),
-        ),
+            ),
+          );
+        },
       ),
     );
   }

@@ -55,6 +55,11 @@ class FirebaseManager {
     }
   }
 
+  static Stream<QuerySnapshot<EventModel>> getTaskWithId(String id) {
+    var collection = getEventCollection();
+    return collection.where("id", isEqualTo: id).snapshots();
+  }
+
   static Stream<QuerySnapshot<EventModel>> getFavouriteEvents(String title) {
     var collection = getEventCollection();
     if (title == null || title.isEmpty) {
